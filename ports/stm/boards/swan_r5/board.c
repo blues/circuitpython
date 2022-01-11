@@ -53,6 +53,19 @@ void board_init(void) {
     //  Set tick interrupt priority, default HAL value is intentionally invalid
     //  Without this, USB does not function.
     HAL_InitTick((1UL << __NVIC_PRIO_BITS) - 1UL);
+
+    initialize_discharge_pin();
+
+    __HAL_RCC_GPIOE_CLK_ENABLE();
+    GPIO_InitTypeDef GPIO_InitStruct;
+    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_LOW;
+    GPIO_InitStruct.Pin = GPIO_PIN_2;
+    HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+    HAL_GPIO_WritePin(GPIOE, GPIO_PIN_2, GPIO_PIN_SET);
+    HAL_Delay(50);
+    HAL_GPIO_WritePin(GPIOE, GPIO_PIN_2, GPIO_PIN_RESET);
 }
 
 bool board_requests_safe_mode(void) {
@@ -60,5 +73,4 @@ bool board_requests_safe_mode(void) {
 }
 
 void reset_board(void) {
-    initialize_discharge_pin();
 }
