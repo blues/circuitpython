@@ -4,7 +4,6 @@ USB_PRODUCT = "Swan R5"
 USB_MANUFACTURER = "Blues Inc."
 
 INTERNAL_FLASH_FILESYSTEM = 1
-
 MCU_SERIES = L4
 MCU_VARIANT = STM32L4R5xx
 MCU_PACKAGE = WLCSP144
@@ -14,6 +13,7 @@ LD_DEFAULT = boards/STM32L4R5_default.ld
 # UF2 boot option
 LD_BOOT = boards/STM32L4R5_boot.ld
 UF2_OFFSET = 0x8010000
+UF2_BOOTLOADER ?= 1
 
 # Turn all of the below off while trying to get the thing to run
 # These modules are implemented in ports/<port>/common-hal:
