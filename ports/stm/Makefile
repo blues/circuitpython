@@ -306,7 +306,7 @@ $(BUILD)/firmware.uf2: $(BUILD)/firmware.hex
 
 flash: $(BUILD)/firmware.bin
 	$(ECHO) "Writing $< to the board"
-	dfu-util -a 0 --dfuse-address 0x08000000 -D $(BUILD)/firmware.bin
+	dfu-util -a 0 --dfuse-address $(BOOTLOADER_OFFSET) -D $(BUILD)/firmware.bin
 
 include $(TOP)/py/mkrules.mk
 
