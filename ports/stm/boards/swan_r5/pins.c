@@ -69,6 +69,9 @@ STATIC const mp_rom_map_elem_t board_module_carrier_table[] = {
     { MP_ROM_QSTR(MP_QSTR_QIO1), MP_ROM_PTR(&pin_PB00) },
     { MP_ROM_QSTR(MP_QSTR_QIO0), MP_ROM_PTR(&pin_PE12) },
 
+    { MP_ROM_QSTR(MP_QSTR_MICROPHONE_CLOCK), MP_ROM_PTR(&pin_PA03) },
+    { MP_ROM_QSTR(MP_QSTR_MICROPHONE_DATA), MP_ROM_PTR(&pin_PC03) },
+
 };
 
 MP_DEFINE_CONST_DICT(board_module_carrier, board_module_carrier_table);
