@@ -11,7 +11,7 @@ MEMORY
     FLASH_FS (rw)       : ORIGIN = 0x08100000, LENGTH = 1024K
     RAM (xrw)           : ORIGIN = 0x20000000, LENGTH = 640K
 
-    
+
 }
 
 /* produce a link error if there is not this amount of RAM for these sections */
