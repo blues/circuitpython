@@ -36,7 +36,7 @@ CIRCUITPY_NVM = 0
 
 CIRCUITPY_ANALOGIO = 1
 CIRCUITPY_BUSIO = 1
-CIRCUITPY_NEOPIXEL_WRITE = 0
+CIRCUITPY_NEOPIXEL_WRITE = 1
 CIRCUITPY_PULSEIO = 1
 CIRCUITPY_PWMIO = 1
 CIRCUITPY_AUDIOPWMIO = 1
@@ -44,14 +44,14 @@ CIRCUITPY_CANIO = 0
 CIRCUITPY_AUDIOBUSIO = 0
 CIRCUITPY_I2CPERIPHERAL = 0
 # Requires SPI, PulseIO (stub ok):
-CIRCUITPY_DISPLAYIO = 0
+CIRCUITPY_DISPLAYIO = 1
 
 # These modules are implemented in shared-module/ - they can be included in
 # any port once their prerequisites in common-hal are complete.
 # Requires DigitalIO:
 CIRCUITPY_BITBANGIO = 1
 # Requires neopixel_write or SPI (dotstar)
-CIRCUITPY_PIXELBUF = 0
+CIRCUITPY_PIXELBUF = 1
 # Requires OS
 CIRCUITPY_RANDOM = 1
 # Requires Microcontroller
@@ -69,5 +69,7 @@ CIRCUITPY_BLEIO_HCI = 0
 CIRCUITPY_BLEIO = 0
 CIRCUITPY_BUSDEVICE = 0
 CIRCUITPY_KEYPAD = 1
+# RGBMATRIX requires protomatter support, which presently doesn't support the L4
 CIRCUITPY_RGBMATRIX = 0
 CIRCUITPY_RTC = 1
+CIRCUITPY_ENABLE_MPY_NATIVE = 1
