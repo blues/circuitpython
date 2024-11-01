@@ -10,10 +10,12 @@ ifeq ($(CHIP_VARIANT), "bcm2711")
 CFLAGS += -mcpu=cortex-a72 -DBCM_VERSION=2711
 CROSS_COMPILE = aarch64-none-elf-
 SUFFIX = 8
+CIRCUITPY_MIN_GCC_VERSION ?= 10
 else ifeq ($(CHIP_VARIANT), "bcm2837")
 CFLAGS += -mcpu=cortex-a53 -DBCM_VERSION=2837
 CROSS_COMPILE = aarch64-none-elf-
 SUFFIX = 8
+CIRCUITPY_MIN_GCC_VERSION ?= 10
 else ifeq ($(CHIP_VARIANT), "bcm2835")
 CFLAGS += -mcpu=arm1176jzf-s -DBCM_VERSION=2835
 CROSS_COMPILE = arm-none-eabi-
