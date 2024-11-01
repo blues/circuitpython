@@ -599,3 +599,19 @@ void background_callback_run_all(void);
 // Enable compiler functionality.
 #define MICROPY_ENABLE_COMPILER (1)
 #define MICROPY_PY_BUILTINS_COMPILE (1)
+
+#ifndef CIRCUITPY_MIN_GCC_VERSION
+#define CIRCUITPY_MIN_GCC_VERSION 13
+#endif
+
+#if defined(__GNUC__)
+#if __GNUC__ < CIRCUITPY_MIN_GCC_VERSION
+// (the 3 level scheme here is required to get expansion & stringization
+// correct)
+#define DO_PRAGMA(x) _Pragma(#x)
+#define DO_ERROR_HELPER(x) DO_PRAGMA(GCC error #x)
+#define DO_ERROR(x) DO_ERROR_HELPER(Minimum GCC version x \
+    -- older versions are known to miscompile CircuitPython)
+DO_ERROR(CIRCUITPY_MIN_GCC_VERSION);
+#endif
+#endif
