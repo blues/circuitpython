@@ -46,16 +46,14 @@ static uint32_t m1_rfmt;
 static uint32_t m1_timing;
 #endif
 
-static void save_psram_settings(void) {
+static void __no_inline_not_in_flash_func(save_psram_settings)(void) {
     #ifdef PICO_RP2350
     // We're about to invalidate the XIP cache, clean it first to commit any dirty writes to PSRAM
-    volatile uint8_t *maintenance_ptr = (uint8_t *)XIP_MAINTENANCE_BASE;
-    for (int i = 1; i < 16 * 1024; i += 8) {
-        // Background info: https://forums.raspberrypi.com/viewtopic.php?t=378249
-        maintenance_ptr[i] = 0; // Clean
-        __compiler_memory_barrier();
-        maintenance_ptr[i - 1] = 0; // Explicitly invalidate
-        __compiler_memory_barrier();
+    // From https://forums.raspberrypi.com/viewtopic.php?t=378249#p2263677
+    // Perform clean-by-set/way on all lines
+    for (uint32_t i = 0; i < 2048; ++i) {
+        // Use the upper 16k of the maintenance space (0x1bffc000 through 0x1bffffff):
+        *(volatile uint8_t *)(XIP_SRAM_BASE + (XIP_MAINTENANCE_BASE - XIP_BASE) + i * 8u + 0x1u) = 0;
     }
 
     m1_timing = qmi_hw->m[1].timing;
@@ -63,11 +61,20 @@ static void save_psram_settings(void) {
     #endif
 }
 
-static void restore_psram_settings(void) {
+static void __no_inline_not_in_flash_func(restore_psram_settings)(void) {
     #ifdef PICO_RP2350
     qmi_hw->m[1].timing = m1_timing;
     qmi_hw->m[1].rfmt = m1_rfmt;
+    __compiler_memory_barrier();
     #endif
+}
+
+void supervisor_flash_pre_write(void) {
+    save_psram_settings();
+}
+
+void supervisor_flash_post_write(void) {
+    restore_psram_settings();
 }
 
 void supervisor_flash_init(void) {
@@ -84,9 +91,9 @@ void supervisor_flash_init(void) {
     // Read the RDID register to get the flash capacity.
     uint8_t cmd[] = {0x9f, 0, 0, 0};
     uint8_t data[4];
-    save_psram_settings();
+    supervisor_flash_pre_write();
     flash_do_cmd(cmd, data, 4);
-    restore_psram_settings();
+    supervisor_flash_post_write();
     uint8_t power_of_two = FLASH_DEFAULT_POWER_OF_TWO;
     // Flash must be at least 2MB (1 << 21) because we use the first 1MB for the
     // CircuitPython core. We validate the range because Adesto Tech flash chips
@@ -116,10 +123,10 @@ void port_internal_flash_flush(void) {
     #if CIRCUITPY_AUDIOCORE
     uint32_t channel_mask = audio_dma_pause_all();
     #endif
-    save_psram_settings();
+    supervisor_flash_pre_write();
     flash_range_erase(CIRCUITPY_CIRCUITPY_DRIVE_START_ADDR + _cache_lba, SECTOR_SIZE);
     flash_range_program(CIRCUITPY_CIRCUITPY_DRIVE_START_ADDR + _cache_lba, _cache, SECTOR_SIZE);
-    restore_psram_settings();
+    supervisor_flash_post_write();
     _cache_lba = NO_CACHE;
     #if CIRCUITPY_AUDIOCORE
     audio_dma_unpause_mask(channel_mask);
