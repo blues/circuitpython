@@ -39,7 +39,7 @@
 float common_hal_mcu_processor_get_temperature(void) {
     adc_init();
     adc_set_temp_sensor_enabled(true);
-    adc_select_input(4);
+    adc_select_input(ADC_TEMPERATURE_CHANNEL_NUM);
     uint16_t value = adc_read();
     adc_set_temp_sensor_enabled(false);
     float voltage = value * 3.3 / (1 << 12);
