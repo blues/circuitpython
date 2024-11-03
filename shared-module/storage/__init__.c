@@ -264,6 +264,7 @@ void common_hal_storage_erase_filesystem(bool extended) {
     supervisor_flash_set_extended(extended);
     #endif
     (void)filesystem_init(false, true);  // Force a re-format. Ignore failure.
+    common_hal_mcu_on_next_reset(RUNMODE_NORMAL);
     common_hal_mcu_reset();
     // We won't actually get here, since we're resetting.
 }
