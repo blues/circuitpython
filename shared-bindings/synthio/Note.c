@@ -20,15 +20,15 @@ static const mp_arg_t note_properties[] = {
     { MP_QSTR_amplitude, MP_ARG_OBJ | MP_ARG_KW_ONLY, {.u_obj = MP_ROM_INT(1) } },
     { MP_QSTR_bend, MP_ARG_OBJ | MP_ARG_KW_ONLY, {.u_obj = MP_ROM_INT(0) } },
     { MP_QSTR_waveform, MP_ARG_OBJ | MP_ARG_KW_ONLY, {.u_obj = MP_ROM_NONE } },
-    { MP_QSTR_waveform_loop_start, MP_ARG_OBJ, {.u_obj = MP_ROM_INT(0) } },
-    { MP_QSTR_waveform_loop_end, MP_ARG_OBJ, {.u_obj = MP_ROM_INT(SYNTHIO_WAVEFORM_SIZE) } },
+    { MP_QSTR_waveform_loop_start, MP_ARG_OBJ | MP_ARG_KW_ONLY, {.u_obj = MP_ROM_INT(0) } },
+    { MP_QSTR_waveform_loop_end, MP_ARG_OBJ | MP_ARG_KW_ONLY, {.u_obj = MP_ROM_INT(SYNTHIO_WAVEFORM_SIZE) } },
     { MP_QSTR_envelope, MP_ARG_OBJ | MP_ARG_KW_ONLY, {.u_obj = MP_ROM_NONE } },
     { MP_QSTR_filter, MP_ARG_OBJ | MP_ARG_KW_ONLY, {.u_obj = MP_ROM_NONE } },
     { MP_QSTR_ring_frequency, MP_ARG_OBJ, {.u_obj = MP_ROM_INT(0) } },
     { MP_QSTR_ring_bend, MP_ARG_OBJ, {.u_obj = MP_ROM_INT(0) } },
     { MP_QSTR_ring_waveform, MP_ARG_OBJ | MP_ARG_KW_ONLY, {.u_obj = MP_ROM_NONE } },
-    { MP_QSTR_ring_waveform_loop_start, MP_ARG_OBJ, {.u_obj = MP_ROM_INT(0) } },
-    { MP_QSTR_ring_waveform_loop_end, MP_ARG_OBJ, {.u_obj = MP_ROM_INT(SYNTHIO_WAVEFORM_SIZE) } },
+    { MP_QSTR_ring_waveform_loop_start, MP_ARG_OBJ | MP_ARG_KW_ONLY, {.u_obj = MP_ROM_INT(0) } },
+    { MP_QSTR_ring_waveform_loop_end, MP_ARG_OBJ | MP_ARG_KW_ONLY, {.u_obj = MP_ROM_INT(SYNTHIO_WAVEFORM_SIZE) } },
 };
 //| class Note:
 //|     def __init__(
@@ -37,8 +37,8 @@ static const mp_arg_t note_properties[] = {
 //|         frequency: float,
 //|         panning: BlockInput = 0.0,
 //|         waveform: Optional[ReadableBuffer] = None,
-//|         waveform_loop_start: int = 0,
-//|         waveform_loop_end: int = waveform_max_length,
+//|         waveform_loop_start: BlockInput = 0,
+//|         waveform_loop_end: BlockInput = waveform_max_length,
 //|         envelope: Optional[Envelope] = None,
 //|         amplitude: BlockInput = 1.0,
 //|         bend: BlockInput = 0.0,
@@ -46,8 +46,8 @@ static const mp_arg_t note_properties[] = {
 //|         ring_frequency: float = 0.0,
 //|         ring_bend: float = 0.0,
 //|         ring_waveform: Optional[ReadableBuffer] = None,
-//|         ring_waveform_loop_start: int = 0,
-//|         ring_waveform_loop_end: int = waveform_max_length,
+//|         ring_waveform_loop_start: BlockInput = 0,
+//|         ring_waveform_loop_end: BlockInput = waveform_max_length,
 //|     ) -> None:
 //|         """Construct a Note object, with a frequency in Hz, and optional panning, waveform, envelope, tremolo (volume change) and bend (frequency change).
 //|
@@ -198,7 +198,9 @@ MP_PROPERTY_GETSET(synthio_note_waveform_obj,
     (mp_obj_t)&synthio_note_get_waveform_obj,
     (mp_obj_t)&synthio_note_set_waveform_obj);
 
-//|     waveform_loop_start: int
+
+
+//|     waveform_loop_start: BlockInput
 //|     """The sample index of where to begin looping waveform data.
 //|
 //|     Values outside the range ``0`` to ``waveform_max_length-1`` (inclusive) are rejected with a `ValueError`.
@@ -206,13 +208,13 @@ MP_PROPERTY_GETSET(synthio_note_waveform_obj,
 //|     Values greater than or equal to the actual waveform length are treated as 0."""
 static mp_obj_t synthio_note_get_waveform_loop_start(mp_obj_t self_in) {
     synthio_note_obj_t *self = MP_OBJ_TO_PTR(self_in);
-    return mp_obj_new_int(common_hal_synthio_note_get_waveform_loop_start(self));
+    return common_hal_synthio_note_get_waveform_loop_start(self);
 }
 MP_DEFINE_CONST_FUN_OBJ_1(synthio_note_get_waveform_loop_start_obj, synthio_note_get_waveform_loop_start);
 
 static mp_obj_t synthio_note_set_waveform_loop_start(mp_obj_t self_in, mp_obj_t arg) {
     synthio_note_obj_t *self = MP_OBJ_TO_PTR(self_in);
-    common_hal_synthio_note_set_waveform_loop_start(self, mp_obj_get_int(arg));
+    common_hal_synthio_note_set_waveform_loop_start(self, arg);
     return mp_const_none;
 }
 MP_DEFINE_CONST_FUN_OBJ_2(synthio_note_set_waveform_loop_start_obj, synthio_note_set_waveform_loop_start);
@@ -220,7 +222,7 @@ MP_PROPERTY_GETSET(synthio_note_waveform_loop_start_obj,
     (mp_obj_t)&synthio_note_get_waveform_loop_start_obj,
     (mp_obj_t)&synthio_note_set_waveform_loop_start_obj);
 
-//|     waveform_loop_end: int
+//|     waveform_loop_end: BlockInput
 //|     """The sample index of where to end looping waveform data.
 //|
 //|     Values outside the range ``1`` to ``waveform_max_length`` (inclusive) are rejected with a `ValueError`.
@@ -231,13 +233,13 @@ MP_PROPERTY_GETSET(synthio_note_waveform_loop_start_obj,
 //|
 static mp_obj_t synthio_note_get_waveform_loop_end(mp_obj_t self_in) {
     synthio_note_obj_t *self = MP_OBJ_TO_PTR(self_in);
-    return mp_obj_new_int(common_hal_synthio_note_get_waveform_loop_end(self));
+    return common_hal_synthio_note_get_waveform_loop_end(self);
 }
 MP_DEFINE_CONST_FUN_OBJ_1(synthio_note_get_waveform_loop_end_obj, synthio_note_get_waveform_loop_end);
 
 static mp_obj_t synthio_note_set_waveform_loop_end(mp_obj_t self_in, mp_obj_t arg) {
     synthio_note_obj_t *self = MP_OBJ_TO_PTR(self_in);
-    common_hal_synthio_note_set_waveform_loop_end(self, mp_obj_get_int(arg));
+    common_hal_synthio_note_set_waveform_loop_end(self, arg);
     return mp_const_none;
 }
 MP_DEFINE_CONST_FUN_OBJ_2(synthio_note_set_waveform_loop_end_obj, synthio_note_set_waveform_loop_end);
@@ -331,7 +333,7 @@ MP_PROPERTY_GETSET(synthio_note_ring_waveform_obj,
     (mp_obj_t)&synthio_note_get_ring_waveform_obj,
     (mp_obj_t)&synthio_note_set_ring_waveform_obj);
 
-//|     ring_waveform_loop_start: int
+//|     ring_waveform_loop_start: BlockInput
 //|     """The sample index of where to begin looping waveform data.
 //|
 //|     Values outside the range ``0`` to ``waveform_max_length-1`` (inclusive) are rejected with a `ValueError`.
@@ -339,13 +341,13 @@ MP_PROPERTY_GETSET(synthio_note_ring_waveform_obj,
 //|     Values greater than or equal to the actual waveform length are treated as 0."""
 static mp_obj_t synthio_note_get_ring_waveform_loop_start(mp_obj_t self_in) {
     synthio_note_obj_t *self = MP_OBJ_TO_PTR(self_in);
-    return mp_obj_new_int(common_hal_synthio_note_get_ring_waveform_loop_start(self));
+    return common_hal_synthio_note_get_ring_waveform_loop_start(self);
 }
 MP_DEFINE_CONST_FUN_OBJ_1(synthio_note_get_ring_waveform_loop_start_obj, synthio_note_get_ring_waveform_loop_start);
 
 static mp_obj_t synthio_note_set_ring_waveform_loop_start(mp_obj_t self_in, mp_obj_t arg) {
     synthio_note_obj_t *self = MP_OBJ_TO_PTR(self_in);
-    common_hal_synthio_note_set_ring_waveform_loop_start(self, mp_obj_get_int(arg));
+    common_hal_synthio_note_set_ring_waveform_loop_start(self, arg);
     return mp_const_none;
 }
 MP_DEFINE_CONST_FUN_OBJ_2(synthio_note_set_ring_waveform_loop_start_obj, synthio_note_set_ring_waveform_loop_start);
@@ -353,7 +355,7 @@ MP_PROPERTY_GETSET(synthio_note_ring_waveform_loop_start_obj,
     (mp_obj_t)&synthio_note_get_ring_waveform_loop_start_obj,
     (mp_obj_t)&synthio_note_set_ring_waveform_loop_start_obj);
 
-//|     ring_waveform_loop_end: int
+//|     ring_waveform_loop_end: BlockInput
 //|     """The sample index of where to end looping waveform data.
 //|
 //|     Values outside the range ``1`` to ``waveform_max_length`` (inclusive) are rejected with a `ValueError`.
@@ -364,13 +366,13 @@ MP_PROPERTY_GETSET(synthio_note_ring_waveform_loop_start_obj,
 //|
 static mp_obj_t synthio_note_get_ring_waveform_loop_end(mp_obj_t self_in) {
     synthio_note_obj_t *self = MP_OBJ_TO_PTR(self_in);
-    return mp_obj_new_int(common_hal_synthio_note_get_ring_waveform_loop_end(self));
+    return common_hal_synthio_note_get_ring_waveform_loop_end(self);
 }
 MP_DEFINE_CONST_FUN_OBJ_1(synthio_note_get_ring_waveform_loop_end_obj, synthio_note_get_ring_waveform_loop_end);
 
 static mp_obj_t synthio_note_set_ring_waveform_loop_end(mp_obj_t self_in, mp_obj_t arg) {
     synthio_note_obj_t *self = MP_OBJ_TO_PTR(self_in);
-    common_hal_synthio_note_set_ring_waveform_loop_end(self, mp_obj_get_int(arg));
+    common_hal_synthio_note_set_ring_waveform_loop_end(self, arg);
     return mp_const_none;
 }
 MP_DEFINE_CONST_FUN_OBJ_2(synthio_note_set_ring_waveform_loop_end_obj, synthio_note_set_ring_waveform_loop_end);
