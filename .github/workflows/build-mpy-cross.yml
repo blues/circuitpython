@@ -59,8 +59,8 @@ jobs:
 
     - name: Set output
       env:
-        EX=${{ env[format('EX_{0}', matrix.mpy-cross)] || matrix.mpy-cross }}
-        OS=${{ env[format('OS_{0}', matrix.mpy-cross)] }}"
+        EX: ${{ env[format('EX_{0}', matrix.mpy-cross)] || matrix.mpy-cross }}
+        OS: ${{ env[format('OS_{0}', matrix.mpy-cross)] }}"
       run: |
         echo >> $GITHUB_ENV "EX=$EX"
         echo >> $GITHUB_ENV "OS=$OS"
