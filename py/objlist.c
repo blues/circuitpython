@@ -485,10 +485,11 @@ static const mp_rom_map_elem_t list_locals_dict_table[] = {
 
 static MP_DEFINE_CONST_DICT(list_locals_dict, list_locals_dict_table);
 
+// CIRCUITPY-CHANGE: Diagnose json.dump on invalid types
 MP_DEFINE_CONST_OBJ_TYPE(
     mp_type_list,
     MP_QSTR_list,
-    MP_TYPE_FLAG_ITER_IS_GETITER,
+    MP_TYPE_FLAG_ITER_IS_GETITER | MP_TYPE_FLAG_PRINT_JSON,
     make_new, mp_obj_list_make_new,
     print, list_print,
     unary_op, list_unary_op,

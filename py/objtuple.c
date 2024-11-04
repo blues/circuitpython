@@ -232,10 +232,11 @@ static const mp_rom_map_elem_t tuple_locals_dict_table[] = {
 
 static MP_DEFINE_CONST_DICT(tuple_locals_dict, tuple_locals_dict_table);
 
+// CIRCUITPY-CHANGE: Diagnose json.dump on invalid types
 MP_DEFINE_CONST_OBJ_TYPE(
     mp_type_tuple,
     MP_QSTR_tuple,
-    MP_TYPE_FLAG_ITER_IS_GETITER,
+    MP_TYPE_FLAG_ITER_IS_GETITER | MP_TYPE_FLAG_PRINT_JSON,
     make_new, mp_obj_tuple_make_new,
     print, mp_obj_tuple_print,
     unary_op, mp_obj_tuple_unary_op,
