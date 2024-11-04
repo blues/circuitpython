@@ -203,9 +203,7 @@ MP_PROPERTY_GETSET(synthio_note_waveform_obj,
 //|     waveform_loop_start: BlockInput
 //|     """The sample index of where to begin looping waveform data.
 //|
-//|     Values outside the range ``0`` to ``waveform_max_length-1`` (inclusive) are rejected with a `ValueError`.
-//|
-//|     Values greater than or equal to the actual waveform length are treated as 0."""
+//|     The value is limited to the range ``0`` to ``len(waveform)-1`` (inclusive)."""
 static mp_obj_t synthio_note_get_waveform_loop_start(mp_obj_t self_in) {
     synthio_note_obj_t *self = MP_OBJ_TO_PTR(self_in);
     return common_hal_synthio_note_get_waveform_loop_start(self);
@@ -225,9 +223,7 @@ MP_PROPERTY_GETSET(synthio_note_waveform_loop_start_obj,
 //|     waveform_loop_end: BlockInput
 //|     """The sample index of where to end looping waveform data.
 //|
-//|     Values outside the range ``1`` to ``waveform_max_length`` (inclusive) are rejected with a `ValueError`.
-//|
-//|     If the value is greater than the actual waveform length, or less than or equal to the loop start, the loop will occur at the end of the waveform.
+//|     The value is limited to the range ``waveform_loop_start+1`` to ``len(waveform)`` (inclusive).
 //|
 //|     Use the `synthio.waveform_max_length` constant to set the loop point at the end of the wave form, no matter its length."""
 //|
@@ -336,9 +332,7 @@ MP_PROPERTY_GETSET(synthio_note_ring_waveform_obj,
 //|     ring_waveform_loop_start: BlockInput
 //|     """The sample index of where to begin looping waveform data.
 //|
-//|     Values outside the range ``0`` to ``waveform_max_length-1`` (inclusive) are rejected with a `ValueError`.
-//|
-//|     Values greater than or equal to the actual waveform length are treated as 0."""
+//|     The value is limited to the range ``0`` to ``len(ring_waveform)-1`` (inclusive)."""
 static mp_obj_t synthio_note_get_ring_waveform_loop_start(mp_obj_t self_in) {
     synthio_note_obj_t *self = MP_OBJ_TO_PTR(self_in);
     return common_hal_synthio_note_get_ring_waveform_loop_start(self);
@@ -358,9 +352,7 @@ MP_PROPERTY_GETSET(synthio_note_ring_waveform_loop_start_obj,
 //|     ring_waveform_loop_end: BlockInput
 //|     """The sample index of where to end looping waveform data.
 //|
-//|     Values outside the range ``1`` to ``waveform_max_length`` (inclusive) are rejected with a `ValueError`.
-//|
-//|     If the value is greater than the actual waveform length, or less than or equal to the loop start, the loop will occur at the end of the waveform.
+//|     The value is limited to the range ``ring_waveform_loop_start+1`` to ``len(ring_waveform)`` (inclusive).
 //|
 //|     Use the `synthio.waveform_max_length` constant to set the loop point at the end of the wave form, no matter its length."""
 //|
