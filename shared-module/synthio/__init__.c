@@ -184,15 +184,15 @@ static bool synth_note_into_buffer(synthio_synth_t *synth, int chan, int32_t *ou
         if (note->waveform_buf.buf) {
             waveform = note->waveform_buf.buf;
             waveform_length = note->waveform_buf.len;
-            waveform_start = synthio_block_slot_get_limited(&note->waveform_loop_start, 0, waveform_length - 1);
-            waveform_length = synthio_block_slot_get_limited(&note->waveform_loop_end, waveform_start + 1, waveform_length);
+            waveform_start = (uint32_t)synthio_block_slot_get_limited(&note->waveform_loop_start, 0, waveform_length - 1);
+            waveform_length = (uint32_t)synthio_block_slot_get_limited(&note->waveform_loop_end, waveform_start + 1, waveform_length);
         }
         dds_rate = synthio_frequency_convert_scaled_to_dds((uint64_t)frequency_scaled * (waveform_length - waveform_start), sample_rate);
         if (note->ring_frequency_scaled != 0 && note->ring_waveform_buf.buf) {
             ring_waveform = note->ring_waveform_buf.buf;
             ring_waveform_length = note->ring_waveform_buf.len;
-            ring_waveform_start = synthio_block_slot_get_limited(&note->ring_waveform_loop_start, 0, ring_waveform_length - 1);
-            ring_waveform_length = synthio_block_slot_get_limited(&note->ring_waveform_loop_end, ring_waveform_start + 1, ring_waveform_length);
+            ring_waveform_start = (uint32_t)synthio_block_slot_get_limited(&note->ring_waveform_loop_start, 0, ring_waveform_length - 1);
+            ring_waveform_length = (uint32_t)synthio_block_slot_get_limited(&note->ring_waveform_loop_end, ring_waveform_start + 1, ring_waveform_length);
             ring_dds_rate = synthio_frequency_convert_scaled_to_dds((uint64_t)note->ring_frequency_bent * (ring_waveform_length - ring_waveform_start), sample_rate);
             uint32_t lim = ring_waveform_length << SYNTHIO_FREQUENCY_SHIFT;
             if (ring_dds_rate > lim / sizeof(int16_t)) {
