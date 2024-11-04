@@ -196,7 +196,7 @@ static bool synth_note_into_buffer(synthio_synth_t *synth, int chan, int32_t *ou
             ring_waveform = note->ring_waveform_buf.buf;
             ring_waveform_length = note->ring_waveform_buf.len;
             if (note->ring_waveform_loop_start > 0 && note->ring_waveform_loop_start < ring_waveform_length) {
-                ring_waveform_start = note->waveform_loop_start;
+                ring_waveform_start = note->ring_waveform_loop_start;
             }
             if (note->ring_waveform_loop_end > ring_waveform_start && note->ring_waveform_loop_end < ring_waveform_length) {
                 ring_waveform_length = note->ring_waveform_loop_end;
