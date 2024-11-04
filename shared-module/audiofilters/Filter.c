@@ -240,8 +240,21 @@ audioio_get_buffer_result_t audiofilters_filter_get_buffer(audiofilters_filter_o
             }
         }
 
-        // If we have a sample, filter it
-        if (self->sample != NULL) {
+        if (self->sample == NULL) {
+            if (self->samples_signed) {
+                memset(word_buffer, 0, length * (self->bits_per_sample / 8));
+            } else {
+                // For unsigned samples set to the middle which is "quiet"
+                if (MP_LIKELY(self->bits_per_sample == 16)) {
+                    memset(word_buffer, 32768, length * (self->bits_per_sample / 8));
+                } else {
+                    memset(hword_buffer, 128, length * (self->bits_per_sample / 8));
+                }
+            }
+
+            length = 0;
+        } else {
+            // we have a sample to play and filter
             // Determine how many bytes we can process to our buffer, the less of the sample we have left and our buffer remaining
             uint32_t n = MIN(self->sample_buffer_length, length);
 
