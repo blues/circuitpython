@@ -68,7 +68,7 @@ jobs:
     - name: Set head sha (pull)
       if: github.event_name == 'pull_request'
       env:
-        HEAD_SHA:${{ github.event.pull_request.head.sha }}
+        HEAD_SHA: ${{ github.event.pull_request.head.sha }}
       run: echo "HEAD_SHA=$HEAD_SHA" >> $GITHUB_ENV
     - name: Set base sha (pull)
       if: github.event_name == 'pull_request'
