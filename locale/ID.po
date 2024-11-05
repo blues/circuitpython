@@ -6,15 +6,15 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-01-04 12:55-0600\n"
-"PO-Revision-Date: 2023-11-16 15:03+0000\n"
-"Last-Translator: Scott Shawcroft <scott@tannewt.org>\n"
+"PO-Revision-Date: 2024-11-06 14:00+0000\n"
+"Last-Translator: Iqbal Rifai <yukifag@pm.me>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: ID\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.2\n"
+"X-Generator: Weblate 5.8.2\n"
 
 #: main.c
 msgid ""
@@ -1714,15 +1714,15 @@ msgstr "Jumlah pin terlalu besar"
 #: ports/stm/common-hal/alarm/pin/PinAlarm.c
 #: ports/stm/common-hal/pulseio/PulseIn.c
 msgid "Pin interrupt already in use"
-msgstr ""
+msgstr "Pin interupsi sudah digunakan"
 
 #: shared-bindings/adafruit_bus_device/spi_device/SPIDevice.c
 msgid "Pin is input only"
-msgstr ""
+msgstr "Pin hanya input"
 
 #: ports/raspberrypi/common-hal/countio/Counter.c
 msgid "Pin must be on PWM Channel B"
-msgstr ""
+msgstr "Pin harus berada di Saluran PWM B"
 
 #: shared-bindings/rgbmatrix/RGBMatrix.c
 #, c-format
@@ -1741,11 +1741,11 @@ msgstr "Pin harus berurutan"
 
 #: ports/raspberrypi/common-hal/rotaryio/IncrementalEncoder.c
 msgid "Pins must be sequential GPIO pins"
-msgstr ""
+msgstr "Pin harus merupakan pin GPIO yang berurutan"
 
 #: ports/raspberrypi/common-hal/audiopwmio/PWMAudioOut.c
 msgid "Pins must share PWM slice"
-msgstr ""
+msgstr "Pin harus berbagi potongan PWM"
 
 #: shared-module/usb/core/Device.c
 msgid "Pipe error"
@@ -1757,11 +1757,11 @@ msgstr "Tambahkan module apapun pada filesystem\n"
 
 #: shared-module/vectorio/Polygon.c
 msgid "Polygon needs at least 3 points"
-msgstr ""
+msgstr "Poligon membutuhkan setidaknya 3 poin"
 
 #: supervisor/shared/safe_mode.c
 msgid "Power dipped. Make sure you are providing enough power."
-msgstr ""
+msgstr "Daya menurun. Pastikan Anda menyediakan daya yang cukup."
 
 #: shared-bindings/_bleio/Adapter.c
 msgid "Prefix buffer must be on the heap"
@@ -1779,19 +1779,19 @@ msgstr ""
 
 #: ports/raspberrypi/common-hal/rp2pio/StateMachine.c
 msgid "Program does IN without loading ISR"
-msgstr ""
+msgstr "Program melakukan IN tanpa memuat ISR"
 
 #: ports/raspberrypi/common-hal/rp2pio/StateMachine.c
 msgid "Program does OUT without loading OSR"
-msgstr ""
+msgstr "Program melakukan OUT tanpa memuat OSR"
 
 #: ports/raspberrypi/bindings/rp2pio/StateMachine.c
 msgid "Program size invalid"
-msgstr ""
+msgstr "Ukuran program tidak valid"
 
 #: ports/espressif/common-hal/espulp/ULP.c
 msgid "Program too long"
-msgstr ""
+msgstr "Program terlalu lama"
 
 #: shared-bindings/digitalio/DigitalInOut.c
 msgid "Pull not used when direction is output."
@@ -1799,11 +1799,11 @@ msgstr "Pull tidak digunakan saat arah output."
 
 #: ports/raspberrypi/common-hal/countio/Counter.c
 msgid "RISE_AND_FALL not available on this chip"
-msgstr ""
+msgstr "RISE_AND_FALL tidak tersedia pada chip ini"
 
 #: shared-module/displayio/OnDiskBitmap.c
 msgid "RLE-compressed BMP not supported"
-msgstr ""
+msgstr "BMP-terkompresi RLE tidak didukung"
 
 #: ports/stm/common-hal/os/__init__.c
 msgid "RNG DeInit Error"
@@ -1844,11 +1844,11 @@ msgstr "sistem file (filesystem) bersifat Read-only"
 
 #: ports/espressif/common-hal/espidf/__init__.c
 msgid "Received response was invalid"
-msgstr ""
+msgstr "Respon yang diterima tidak valid"
 
 #: supervisor/shared/bluetooth/bluetooth.c
 msgid "Reconnecting"
-msgstr ""
+msgstr "Menghubungkan kembali"
 
 #: shared-bindings/epaperdisplay/EPaperDisplay.c
 msgid "Refresh too soon"
@@ -1856,7 +1856,7 @@ msgstr "Segarkan terlalu cepat"
 
 #: shared-bindings/canio/RemoteTransmissionRequest.c
 msgid "RemoteTransmissionRequests limited to 8 bytes"
-msgstr ""
+msgstr "RemoteTransmissionRequests dibatasi hingga 8 byte"
 
 #: shared-bindings/aesio/aes.c
 msgid "Requested AES mode is unsupported"
@@ -1864,7 +1864,7 @@ msgstr "Mode AES yang diminta tidak didukung"
 
 #: ports/espressif/common-hal/espidf/__init__.c
 msgid "Requested resource not found"
-msgstr ""
+msgstr "Sumber yang diminta tidak ditemukan"
 
 #: ports/atmel-samd/common-hal/audioio/AudioOut.c
 msgid "Right channel unsupported"
@@ -1872,7 +1872,7 @@ msgstr "Channel Kanan tidak didukung"
 
 #: shared-module/jpegio/JpegDecoder.c
 msgid "Right format but not supported"
-msgstr ""
+msgstr "Format benar tapi tidak didukung"
 
 #: main.c
 msgid "Running in safe mode! Not running saved code.\n"
@@ -1882,7 +1882,7 @@ msgstr ""
 
 #: shared-module/sdcardio/SDCard.c
 msgid "SD card CSD format not supported"
-msgstr ""
+msgstr "Kartu SD Format CSD tidak didukung"
 
 #: ports/cxd56/common-hal/sdioio/SDCard.c
 msgid "SDCard init"
@@ -1901,7 +1901,7 @@ msgstr ""
 
 #: ports/espressif/common-hal/busio/SPI.c
 msgid "SPI configuration failed"
-msgstr ""
+msgstr "Konfigurasi SPI gagal"
 
 #: ports/stm/common-hal/busio/SPI.c
 msgid "SPI init error"
@@ -1909,7 +1909,7 @@ msgstr ""
 
 #: ports/raspberrypi/common-hal/busio/SPI.c
 msgid "SPI peripheral in use"
-msgstr ""
+msgstr "Periferal SPI sedang digunakan"
 
 #: ports/stm/common-hal/busio/SPI.c
 msgid "SPI re-init"
@@ -1917,12 +1917,12 @@ msgstr ""
 
 #: shared-bindings/is31fl3741/FrameBuffer.c
 msgid "Scale dimensions must divide by 3"
-msgstr ""
+msgstr "Skala dimensi harus dibagi 3"
 
 #: ports/espressif/common-hal/_bleio/Adapter.c
 #: ports/nordic/common-hal/_bleio/Adapter.c
 msgid "Scan already in progress. Stop with stop_scan."
-msgstr ""
+msgstr "Pemindaian sedang berjalan. Hentikan dengan stop_scan."
 
 #: ports/atmel-samd/common-hal/audiobusio/I2SOut.c
 #: ports/atmel-samd/common-hal/audiobusio/PDMIn.c
@@ -1931,11 +1931,11 @@ msgstr "Serializer sedang digunakan"
 
 #: shared-bindings/ssl/SSLContext.c
 msgid "Server side context cannot have hostname"
-msgstr ""
+msgstr "Context server tidak mendukung hostname"
 
 #: ports/cxd56/common-hal/camera/Camera.c
 msgid "Size not supported"
-msgstr ""
+msgstr "Ukuran tidak didukung"
 
 #: shared-bindings/alarm/SleepMemory.c shared-bindings/memorymap/AddressRange.c
 #: shared-bindings/nvm/ByteArray.c
@@ -1952,7 +1952,7 @@ msgstr "Potongan tidak didukung"
 #: ports/espressif/common-hal/socketpool/SocketPool.c
 #: ports/raspberrypi/common-hal/socketpool/SocketPool.c
 msgid "SocketPool can only be used with wifi.radio"
-msgstr ""
+msgstr "SocketPool hanya dapat digunakan dengan wifi.radio"
 
 #: shared-bindings/aesio/aes.c
 msgid "Source and destination buffers must be the same length"
@@ -1960,19 +1960,19 @@ msgstr "Buffer sumber dan tujuan harus memiliki panjang yang sama"
 
 #: shared-bindings/paralleldisplaybus/ParallelBus.c
 msgid "Specify exactly one of data0 or data_pins"
-msgstr ""
+msgstr "Pilih hanya satu antara data0 atau data_pins"
 
 #: supervisor/shared/safe_mode.c
 msgid "Stack overflow. Increase stack size."
-msgstr ""
+msgstr "Stack overflow. Tambahkan ukuran stack."
 
 #: shared-bindings/alarm/time/TimeAlarm.c
 msgid "Supply one of monotonic_time or epoch_time"
-msgstr ""
+msgstr "Berikan salah satu dari monotonic_time atau epoch_time"
 
 #: shared-bindings/gnss/GNSS.c
 msgid "System entry must be gnss.SatelliteSystem"
-msgstr ""
+msgstr "Entri sistem harus berupa gnss.SatelliteSystem"
 
 #: ports/stm/common-hal/microcontroller/Processor.c
 msgid "Temperature read timed out"
@@ -1980,33 +1980,36 @@ msgstr "Waktu baca suhu habis"
 
 #: supervisor/shared/safe_mode.c
 msgid "The `microcontroller` module was used to boot into safe mode."
-msgstr ""
+msgstr "Modul `microcontroller` digunakan untuk boot ke mode aman."
 
 #: py/obj.c
 msgid "The above exception was the direct cause of the following exception:"
 msgstr ""
+"Pengecualian di atas adalah penyebab langsung dari pengecualian berikut:"
 
 #: shared-bindings/rgbmatrix/RGBMatrix.c
 msgid "The length of rgb_pins must be 6, 12, 18, 24, or 30"
-msgstr ""
+msgstr "Panjang rgb_pins harus 6, 12, 18, 24, atau 30"
 
 #: shared-module/audiodelays/Echo.c shared-module/audiomixer/MixerVoice.c
 msgid "The sample's %q does not match"
-msgstr ""
+msgstr "Sampel punya %q yang tidak cocok"
 
 #: supervisor/shared/safe_mode.c
 msgid "Third-party firmware fatal error."
-msgstr ""
+msgstr "Kesalahan fatal pada firmware pihak ketiga."
 
 #: shared-module/imagecapture/ParallelImageCapture.c
 msgid "This microcontroller does not support continuous capture."
-msgstr ""
+msgstr "Mikrokontroler ini tidak mendukung penangkapan berkelanjutan."
 
 #: shared-module/paralleldisplaybus/ParallelBus.c
 msgid ""
 "This microcontroller only supports data0=, not data_pins=, because it "
 "requires contiguous pins."
 msgstr ""
+"Mikrokontroler ini hanya mendukung data0=, bukan data_pins=, karena "
+"membutuhkan pin yang berurutan."
 
 #: shared-bindings/displayio/TileGrid.c
 msgid "Tile height must exactly divide bitmap height"
@@ -2022,17 +2025,18 @@ msgstr "Lebar ubin harus persis membagi lebar bitmap"
 
 #: shared-bindings/alarm/time/TimeAlarm.c
 msgid "Time is in the past."
-msgstr ""
+msgstr "Waktu sudah berlalu."
 
 #: ports/espressif/common-hal/_bleio/Adapter.c
 #: ports/nordic/common-hal/_bleio/Adapter.c
 #, c-format
 msgid "Timeout is too long: Maximum timeout length is %d seconds"
 msgstr ""
+"Waktu tunggu terlalu lama: Panjang maksimum waktu tunggu adalah %d detik"
 
 #: ports/atmel-samd/common-hal/audiobusio/I2SOut.c
 msgid "Too many channels in sample"
-msgstr ""
+msgstr "Sampel memiliki terlalu banyak saluran"
 
 #: ports/raspberrypi/common-hal/audiobusio/I2SOut.c
 msgid "Too many channels in sample."
@@ -2040,11 +2044,13 @@ msgstr "Terlalu banyak channel dalam sampel"
 
 #: ports/espressif/common-hal/_bleio/Characteristic.c
 msgid "Too many descriptors"
-msgstr ""
+msgstr "Terlalu banyak deskriptor"
 
 #: shared-module/displayio/__init__.c
 msgid "Too many display busses; forgot displayio.release_displays() ?"
 msgstr ""
+"Terlalu banyak jalur tampilan; mungkin kamu lupa untuk panggil displayio."
+"release_displays()?"
 
 #: shared-module/displayio/__init__.c
 msgid "Too many displays"
@@ -2053,12 +2059,12 @@ msgstr "Terlalu banyak tampilan"
 #: ports/espressif/common-hal/_bleio/PacketBuffer.c
 #: ports/nordic/common-hal/_bleio/PacketBuffer.c
 msgid "Total data to write is larger than %q"
-msgstr ""
+msgstr "Total data yang akan ditulis lebih besar dari %q"
 
 #: ports/raspberrypi/common-hal/alarm/touch/TouchAlarm.c
 #: ports/stm/common-hal/alarm/touch/TouchAlarm.c
 msgid "Touch alarms not available"
-msgstr ""
+msgstr "Alarm sentuh tidak tersedia"
 
 #: py/obj.c
 msgid "Traceback (most recent call last):\n"
@@ -2075,7 +2081,7 @@ msgstr ""
 
 #: ports/raspberrypi/common-hal/busio/UART.c
 msgid "UART peripheral in use"
-msgstr ""
+msgstr "Periferal UART sedang digunakan"
 
 #: ports/stm/common-hal/busio/UART.c
 msgid "UART re-init"
@@ -2095,11 +2101,11 @@ msgstr ""
 
 #: supervisor/shared/safe_mode.c
 msgid "USB devices need more endpoints than are available."
-msgstr ""
+msgstr "Perangkat USB butuh lebih banyak endpoint daripada yang tersedia."
 
 #: supervisor/shared/safe_mode.c
 msgid "USB devices specify too many interface names."
-msgstr ""
+msgstr "Perangkat USB menggunakan terlalu banyak nama antarmuka."
 
 #: shared-module/usb_hid/Device.c
 msgid "USB error"
@@ -2119,7 +2125,7 @@ msgstr "Nilai UUID bukan str, int atau byte buffer"
 
 #: ports/raspberrypi/common-hal/memorymap/AddressRange.c
 msgid "Unable to access unaligned IO register"
-msgstr ""
+msgstr "Tidak dapat mengakses register IO yang tidak teratur"
 
 #: ports/atmel-samd/common-hal/audiobusio/I2SOut.c
 #: ports/atmel-samd/common-hal/audioio/AudioOut.c
@@ -2130,11 +2136,11 @@ msgstr "Tidak dapat mengalokasikan buffer untuk signed conversion"
 
 #: supervisor/shared/safe_mode.c
 msgid "Unable to allocate to the heap."
-msgstr ""
+msgstr "Tidak dapat mengalokasikan ke heap."
 
 #: ports/espressif/common-hal/busio/I2C.c
 msgid "Unable to create lock"
-msgstr ""
+msgstr "Tidak dapat membuat kunci"
 
 #: shared-module/i2cdisplaybus/I2CDisplayBus.c
 #: shared-module/is31fl3741/IS31FL3741.c
@@ -2153,7 +2159,7 @@ msgstr "Tidak dapat membaca data palet warna"
 #: ports/espressif/common-hal/mdns/Server.c
 #: ports/raspberrypi/common-hal/mdns/Server.c
 msgid "Unable to start mDNS query"
-msgstr ""
+msgstr "Tidak dapat memulai kueri mDNS"
 
 #: shared-bindings/nvm/ByteArray.c
 msgid "Unable to write to nvm."
@@ -2161,11 +2167,11 @@ msgstr "Tidak dapat menulis ke nvm."
 
 #: ports/raspberrypi/common-hal/memorymap/AddressRange.c
 msgid "Unable to write to read-only memory"
-msgstr ""
+msgstr "Tidak dapat menulis ke memori hanya-baca"
 
 #: shared-bindings/alarm/SleepMemory.c
 msgid "Unable to write to sleep_memory."
-msgstr ""
+msgstr "Tidak dapat menulis ke sleep_memory."
 
 #: ports/nordic/common-hal/_bleio/UUID.c
 msgid "Unexpected nrfx uuid type"
@@ -2174,23 +2180,23 @@ msgstr "Tipe urf nrfx tak sesuai"
 #: ports/espressif/common-hal/_bleio/__init__.c
 #, c-format
 msgid "Unknown BLE error at %s:%d: %d"
-msgstr ""
+msgstr "Kesalahan BLE tidak diketahui di %s:%d: %d"
 
 #: ports/espressif/common-hal/_bleio/__init__.c
 #, c-format
 msgid "Unknown BLE error: %d"
-msgstr ""
+msgstr "Kesalahan BLE tidak diketahui: %d"
 
 #: ports/espressif/common-hal/max3421e/Max3421E.c
 #: ports/raspberrypi/common-hal/wifi/__init__.c
 #, c-format
 msgid "Unknown error code %d"
-msgstr ""
+msgstr "Kode kesalahan tidak diketahui %d"
 
 #: shared-bindings/wifi/Radio.c
 #, c-format
 msgid "Unknown failure %d"
-msgstr ""
+msgstr "Kegagalan tidak diketahui %d"
 
 #: ports/nordic/common-hal/_bleio/__init__.c
 #, c-format
@@ -2210,17 +2216,17 @@ msgstr "Kesalahan keamanan tidak dikenal: 0x%04x"
 #: ports/espressif/common-hal/_bleio/__init__.c
 #, c-format
 msgid "Unknown system firmware error at %s:%d: %d"
-msgstr ""
+msgstr "Kesalahan firmware sistem tidak dikenal di %s:%d: %d"
 
 #: ports/nordic/common-hal/_bleio/__init__.c
 #, c-format
 msgid "Unknown system firmware error: %04x"
-msgstr ""
+msgstr "Kesalahan firmware sistem tidak diketahui: %04x"
 
 #: ports/espressif/common-hal/_bleio/__init__.c
 #, c-format
 msgid "Unknown system firmware error: %d"
-msgstr ""
+msgstr "Kesalahan firmware sistem tidak diketahui: %d"
 
 #: shared-bindings/adafruit_pixelbuf/PixelBuf.c
 #: shared-module/_pixelmap/PixelMap.c
@@ -2250,16 +2256,16 @@ msgstr "Format tidak didukung"
 
 #: shared-bindings/hashlib/__init__.c
 msgid "Unsupported hash algorithm"
-msgstr ""
+msgstr "Algoritma hash tidak didukung"
 
 #: ports/espressif/common-hal/socketpool/Socket.c
 msgid "Unsupported socket type"
-msgstr ""
+msgstr "Jenis soket tidak didukung"
 
 #: ports/espressif/common-hal/_bleio/Adapter.c
 #: ports/espressif/common-hal/dualbank/__init__.c
 msgid "Update failed"
-msgstr ""
+msgstr "Pembaruan gagal"
 
 #: ports/espressif/common-hal/_bleio/Characteristic.c
 #: ports/nordic/common-hal/_bleio/Characteristic.c
@@ -2275,7 +2281,7 @@ msgstr "Panjang nilai > max_length"
 
 #: ports/espressif/common-hal/espidf/__init__.c
 msgid "Version was invalid"
-msgstr ""
+msgstr "Versi tidak valid"
 
 #: ports/stm/common-hal/microcontroller/Processor.c
 msgid "Voltage read timed out"
@@ -2287,7 +2293,7 @@ msgstr "PERINGATAN: Nama file kode anda mempunyai dua ekstensi\n"
 
 #: ports/nordic/common-hal/watchdog/WatchDogTimer.c
 msgid "WatchDogTimer cannot be deinitialized once mode is set to RESET"
-msgstr ""
+msgstr "WatchDogTimer tidak dapat dideinisialisasi setelah mode diatur ke RESET"
 
 #: py/builtinhelp.c
 #, c-format
@@ -2298,6 +2304,11 @@ msgid ""
 "\n"
 "To list built-in modules type `help(\"modules\")`.\n"
 msgstr ""
+"Selamat datang di Adafruit CircuitPython %s!\n"
+"\n"
+"Kunjungi circuitpython.org untuk informasi lebih lanjut.\n"
+"\n"
+"Untuk membuat daftar modul bawaan, ketik `help(\"modules\")`.\n"
 
 #: supervisor/shared/web_workflow/web_workflow.c
 msgid "Wi-Fi: "
@@ -2305,7 +2316,7 @@ msgstr ""
 
 #: ports/raspberrypi/common-hal/wifi/Radio.c
 msgid "Wifi is not enabled"
-msgstr ""
+msgstr "Wifi tidak diaktifkan"
 
 #: main.c
 msgid "Woken up by alarm.\n"
@@ -2321,63 +2332,63 @@ msgstr "Menulis tidak didukung pada Karakteristik"
 #: ports/atmel-samd/boards/circuitplayground_express_displayio/mpconfigboard.h
 #: ports/atmel-samd/boards/meowmeow/mpconfigboard.h
 msgid "You pressed both buttons at start up."
-msgstr ""
+msgstr "Anda menekan kedua tombol saat memulai."
 
 #: ports/espressif/boards/m5stack_core_basic/mpconfigboard.h
 #: ports/espressif/boards/m5stack_core_fire/mpconfigboard.h
 #: ports/espressif/boards/m5stack_stick_c/mpconfigboard.h
 #: ports/espressif/boards/m5stack_stick_c_plus/mpconfigboard.h
 msgid "You pressed button A at start up."
-msgstr ""
+msgstr "Anda menekan tombol A saat memulai."
 
 #: ports/espressif/boards/m5stack_m5paper/mpconfigboard.h
 msgid "You pressed button DOWN at start up."
-msgstr ""
+msgstr "Anda menekan tombol DOWN saat memulai."
 
 #: supervisor/shared/safe_mode.c
 msgid "You pressed the BOOT button at start up"
-msgstr ""
+msgstr "Anda menekan tombol BOOT saat memulai"
 
 #: ports/espressif/boards/adafruit_feather_esp32c6_4mbflash_nopsram/mpconfigboard.h
 #: ports/espressif/boards/adafruit_itsybitsy_esp32/mpconfigboard.h
 msgid "You pressed the BOOT button at start up."
-msgstr ""
+msgstr "Anda menekan tombol BOOT saat memulai"
 
 #: ports/espressif/boards/adafruit_huzzah32_breakout/mpconfigboard.h
 msgid "You pressed the GPIO0 button at start up."
-msgstr ""
+msgstr "Anda menekan tombol GPIO0 saat memulai."
 
 #: ports/espressif/boards/espressif_esp32_lyrat/mpconfigboard.h
 msgid "You pressed the Rec button at start up."
-msgstr ""
+msgstr "Anda menekan tombol Rec saat memulai."
 
 #: ports/espressif/boards/adafruit_feather_esp32_v2/mpconfigboard.h
 msgid "You pressed the SW38 button at start up."
-msgstr ""
+msgstr "Anda menekan tombol SW38 saat memulai."
 
 #: ports/espressif/boards/hardkernel_odroid_go/mpconfigboard.h
 #: ports/espressif/boards/vidi_x/mpconfigboard.h
 msgid "You pressed the VOLUME button at start up."
-msgstr ""
+msgstr "Anda menekan tombol VOLUME saat memulai."
 
 #: ports/espressif/boards/m5stack_atom_echo/mpconfigboard.h
 #: ports/espressif/boards/m5stack_atom_lite/mpconfigboard.h
 #: ports/espressif/boards/m5stack_atom_matrix/mpconfigboard.h
 #: ports/espressif/boards/m5stack_atom_u/mpconfigboard.h
 msgid "You pressed the central button at start up."
-msgstr ""
+msgstr "Anda menekan tombol tengah saat memulai."
 
 #: ports/nordic/boards/aramcon2_badge/mpconfigboard.h
 msgid "You pressed the left button at start up."
-msgstr ""
+msgstr "Anda menekan tombol kiri saat memulai."
 
 #: supervisor/shared/safe_mode.c
 msgid "You pressed the reset button during boot."
-msgstr ""
+msgstr "Anda menekan tombol reset saat memulai."
 
 #: supervisor/shared/micropython.c
 msgid "[truncated due to length]"
-msgstr ""
+msgstr "[terpotong karena kepanjangan]"
 
 #: py/objtype.c
 msgid "__init__() should return None"
@@ -2402,11 +2413,11 @@ msgstr "alamatnya kosong"
 
 #: py/compile.c
 msgid "annotation must be an identifier"
-msgstr ""
+msgstr "anotasi harus merupakan pengidentifikasi"
 
 #: extmod/ulab/code/numpy/create.c
 msgid "arange: cannot compute length"
-msgstr ""
+msgstr "arange: tidak dapat menghitung panjang"
 
 #: py/modbuiltins.c
 msgid "arg is an empty sequence"
@@ -2414,7 +2425,7 @@ msgstr "arg berisi urutan kosong"
 
 #: py/objobject.c
 msgid "arg must be user-type"
-msgstr ""
+msgstr "arg harus bertipe user-type"
 
 #: extmod/ulab/code/numpy/numerical.c
 msgid "argsort argument must be an ndarray"
