@@ -342,7 +342,10 @@ audioio_get_buffer_result_t audiodelays_echo_get_buffer(audiodelays_echo_obj_t *
                 } else {
                     // For unsigned samples set to the middle which is "quiet"
                     if (MP_LIKELY(self->bits_per_sample == 16)) {
-                        memset(word_buffer, 32768, length * (self->bits_per_sample / 8));
+                        uint16_t *uword_buffer = (uint16_t *)word_buffer;
+                        while (length--) {
+                            *uword_buffer++ = 32768;
+                        }
                     } else {
                         memset(hword_buffer, 128, length * (self->bits_per_sample / 8));
                     }

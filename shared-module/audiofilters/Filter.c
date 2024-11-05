@@ -246,7 +246,10 @@ audioio_get_buffer_result_t audiofilters_filter_get_buffer(audiofilters_filter_o
             } else {
                 // For unsigned samples set to the middle which is "quiet"
                 if (MP_LIKELY(self->bits_per_sample == 16)) {
-                    memset(word_buffer, 32768, length * (self->bits_per_sample / 8));
+                    uint16_t *uword_buffer = (uint16_t *)word_buffer;
+                    while (length--) {
+                        *uword_buffer++ = 32768;
+                    }
                 } else {
                     memset(hword_buffer, 128, length * (self->bits_per_sample / 8));
                 }
