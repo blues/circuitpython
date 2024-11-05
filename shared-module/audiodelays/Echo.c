@@ -77,7 +77,7 @@ void common_hal_audiodelays_echo_construct(audiodelays_echo_obj_t *self, uint32_
 
     // Allocate the echo buffer for the max possible delay, echo is always 16-bit
     self->max_delay_ms = max_delay_ms;
-    self->max_echo_buffer_len = self->sample_rate / 1000.0f * max_delay_ms * (self->channel_count * sizeof(uint16_t)); // bytes
+    self->max_echo_buffer_len = (uint32_t)(self->sample_rate / 1000.0f * max_delay_ms) * (self->channel_count * sizeof(uint16_t)); // bytes
     self->echo_buffer = m_malloc(self->max_echo_buffer_len);
     if (self->echo_buffer == NULL) {
         common_hal_audiodelays_echo_deinit(self);
@@ -129,11 +129,11 @@ void common_hal_audiodelays_echo_set_delay_ms(audiodelays_echo_obj_t *self, mp_o
 void recalculate_delay(audiodelays_echo_obj_t *self, mp_float_t f_delay_ms) {
     if (self->freq_shift) {
         // Calculate the rate of iteration over the echo buffer with 8 sub-bits
-        self->echo_buffer_rate = MAX(self->max_delay_ms / f_delay_ms * 256.0f, 1.0);
+        self->echo_buffer_rate = (uint32_t)MAX(self->max_delay_ms / f_delay_ms * MICROPY_FLOAT_CONST(256.0), MICROPY_FLOAT_CONST(1.0));
         self->echo_buffer_len = self->max_echo_buffer_len;
     } else {
         // Calculate the current echo buffer length in bytes
-        uint32_t new_echo_buffer_len = self->sample_rate / 1000.0f * f_delay_ms * (self->channel_count * sizeof(uint16_t));
+        uint32_t new_echo_buffer_len = (uint32_t)(self->sample_rate / MICROPY_FLOAT_CONST(1000.0) * f_delay_ms) * (self->channel_count * sizeof(uint16_t));
 
         // Check if our new echo is too long for our maximum buffer
         if (new_echo_buffer_len > self->max_echo_buffer_len) {
@@ -153,7 +153,7 @@ void recalculate_delay(audiodelays_echo_obj_t *self, mp_float_t f_delay_ms) {
         memset(self->echo_buffer + self->echo_buffer_len, 0, self->max_echo_buffer_len - self->echo_buffer_len);
     }
 
-    self->current_delay_ms = f_delay_ms;
+    self->current_delay_ms = (uint32_t)f_delay_ms;
 }
 
 mp_obj_t common_hal_audiodelays_echo_get_decay(audiodelays_echo_obj_t *self) {
@@ -360,17 +360,17 @@ audioio_get_buffer_result_t audiodelays_echo_get_buffer(audiodelays_echo_obj_t *
                         echo = echo_buffer[echo_buffer_pos >> 8];
                         next_buffer_pos = echo_buffer_pos + self->echo_buffer_rate;
 
-                        word = echo * decay;
+                        word = (int16_t)(echo * decay);
                         for (uint32_t j = echo_buffer_pos >> 8; j < next_buffer_pos >> 8; j++) {
                             echo_buffer[j % echo_buf_len] = word;
                         }
                     } else {
                         echo = echo_buffer[self->echo_buffer_read_pos++];
-                        word = echo * decay;
+                        word = (int16_t)(echo * decay);
                         echo_buffer[self->echo_buffer_write_pos++] = word;
                     }
 
-                    word = echo * mix;
+                    word = (int16_t)(echo * mix);
 
                     if (MP_LIKELY(self->bits_per_sample == 16)) {
                         word_buffer[i] = word;
@@ -433,10 +433,10 @@ audioio_get_buffer_result_t audiodelays_echo_get_buffer(audiodelays_echo_obj_t *
                     if (self->freq_shift) {
                         echo = echo_buffer[echo_buffer_pos >> 8];
                         next_buffer_pos = echo_buffer_pos + self->echo_buffer_rate;
-                        word = echo * decay + sample_word;
+                        word = (int32_t)(echo * decay + sample_word);
                     } else {
                         echo = echo_buffer[self->echo_buffer_read_pos++];
-                        word = echo * decay + sample_word;
+                        word = (int32_t)(echo * decay + sample_word);
                     }
 
                     if (MP_LIKELY(self->bits_per_sample == 16)) {
@@ -467,12 +467,12 @@ audioio_get_buffer_result_t audiodelays_echo_get_buffer(audiodelays_echo_obj_t *
                     word = echo + sample_word;
 
                     if (MP_LIKELY(self->bits_per_sample == 16)) {
-                        word_buffer[i] = (sample_word * (1.0 - mix)) + (word * mix);
+                        word_buffer[i] = (int16_t)((sample_word * (1.0 - mix)) + (word * mix));
                         if (!self->samples_signed) {
                             word_buffer[i] ^= 0x8000;
                         }
                     } else {
-                        int8_t mixed = (sample_word * (1.0 - mix)) + (word * mix);
+                        int8_t mixed = (int16_t)((sample_word * (1.0 - mix)) + (word * mix));
                         if (self->samples_signed) {
                             hword_buffer[i] = mixed;
                         } else {

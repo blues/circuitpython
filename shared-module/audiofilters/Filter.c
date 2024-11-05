@@ -204,6 +204,7 @@ int16_t mix_down_sample(int32_t sample) {
 
 audioio_get_buffer_result_t audiofilters_filter_get_buffer(audiofilters_filter_obj_t *self, bool single_channel_output, uint8_t channel,
     uint8_t **buffer, uint32_t *buffer_length) {
+    (void)channel;
 
     if (!single_channel_output) {
         channel = 0;
@@ -297,7 +298,7 @@ audioio_get_buffer_result_t audiofilters_filter_get_buffer(audiofilters_filter_o
                     // Mix processed signal with original sample and transfer to output buffer
                     for (uint32_t j = 0; j < n_samples; j++) {
                         if (MP_LIKELY(self->bits_per_sample == 16)) {
-                            word_buffer[i + j] = mix_down_sample((sample_src[i + j] * (1.0 - mix)) + (self->filter_buffer[j] * mix));
+                            word_buffer[i + j] = mix_down_sample((int32_t)((sample_src[i + j] * (MICROPY_FLOAT_CONST(1.0) - mix)) + (self->filter_buffer[j] * mix)));
                             if (!self->samples_signed) {
                                 word_buffer[i + j] ^= 0x8000;
                             }
@@ -305,7 +306,7 @@ audioio_get_buffer_result_t audiofilters_filter_get_buffer(audiofilters_filter_o
                             if (self->samples_signed) {
                                 hword_buffer[i + j] = (int8_t)((sample_hsrc[i + j] * (1.0 - mix)) + (self->filter_buffer[j] * mix));
                             } else {
-                                hword_buffer[i + j] = (uint8_t)(((int8_t)(((uint8_t)sample_hsrc[i + j]) ^ 0x80) * (1.0 - mix)) + (self->filter_buffer[j] * mix)) ^ 0x80;
+                                hword_buffer[i + j] = (uint8_t)(((int8_t)(((uint8_t)sample_hsrc[i + j]) ^ 0x80) * (MICROPY_FLOAT_CONST(1.0) - mix)) + (self->filter_buffer[j] * mix)) ^ 0x80;
                             }
                         }
                     }
