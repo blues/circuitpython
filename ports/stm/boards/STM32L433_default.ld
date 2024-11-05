@@ -1,15 +1,19 @@
 /*
-    GNU linker script for STM32L4R5 with filesystem
+    GNU linker script for STM32L433 with filesystem
 */
 
 /* Specify the memory areas */
 MEMORY
 {
-    FLASH (rx)          : ORIGIN = 0x08000000, LENGTH = 2048K /* entire flash */
+    FLASH (rx)          : ORIGIN = 0x08000000, LENGTH = 256K /* entire flash */
     FLASH_ISR (rx)      : ORIGIN = 0x08000000, LENGTH = 4K /* ISR vector. Kind of wasteful. */
-    FLASH_FIRMWARE (rx) : ORIGIN = 0x08001000, LENGTH = 1024K-128K-4K  /* For now, limit to 1MB so that bank switching is still possible. */
-    FLASH_FS (rw)       : ORIGIN = 0x08100000, LENGTH = 1024K
-    RAM (xrw)           : ORIGIN = 0x20000000, LENGTH = 640K
+    /*
+    FLASH_FIRMWARE (rx) : ORIGIN = 0x08001000, LENGTH = 60K
+    FLASH_FS (rw)       : ORIGIN = 0x08010000, LENGTH = 60K
+    */
+    FLASH_FIRMWARE (rx) : ORIGIN = 0x08001000, LENGTH = 4K
+    FLASH_FS (rw)       : ORIGIN = 0x08004000, LENGTH = 60K
+    RAM (xrw)           : ORIGIN = 0x20000000, LENGTH = 64K
 }
 
 /* produce a link error if there is not this amount of RAM for these sections */

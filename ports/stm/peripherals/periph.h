@@ -21,11 +21,11 @@ typedef struct {
 } mcu_periph_obj_t;
 
 #define PERIPH(index, alt, p_pin)       \
-    { \
-        .periph_index = index, \
-        .altfn_index = alt, \
-        .pin = p_pin, \
-    }
+        { \
+            .periph_index = index, \
+            .altfn_index = alt, \
+            .pin = p_pin, \
+        }
 
 // Timer Peripheral
 
@@ -37,12 +37,12 @@ typedef struct {
 } mcu_tim_pin_obj_t;
 
 #define TIM(index, alt, channel, tim_pin)       \
-    { \
-        .tim_index = index - 1, \
-        .altfn_index = alt, \
-        .channel_index = channel - 1, \
-        .pin = tim_pin, \
-    }
+        { \
+            .tim_index = index - 1, \
+            .altfn_index = alt, \
+            .channel_index = channel - 1, \
+            .pin = tim_pin, \
+        }
 
 // F4 Series
 // Access Lines
@@ -82,6 +82,13 @@ typedef struct {
 #define HAS_TRNG 1
 #define HAS_BASIC_TIM 1
 #include "stm32l4/stm32l4r5xx/periph.h"
+#endif
+
+#ifdef STM32L433xx
+#define HAS_DAC 1
+#define HAS_TRNG 1
+#define HAS_BASIC_TIM 1
+#include "stm32l4/stm32l433xx/periph.h"
 #endif
 
 #ifdef STM32F405xx

@@ -11,6 +11,8 @@
 // L4 Series
 #ifdef STM32L4R5xx
 #include "stm32l4/stm32l4r5xx/clocks.h"
+#elif STM32L433xx
+#include "stm32l4/stm32l433xx/clocks.h"
 #else
 #error Please add other MCUs here so that they are not silently ignored due to #define typos
 #endif
@@ -44,9 +46,15 @@ void stm32_peripherals_clocks_init(void) {
 
     /** Configure the main internal regulator output voltage
   */
+    #if STM32L4R5xx
     if (HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1_BOOST) != HAL_OK) {
         Error_Handler();
     }
+    #elif STM32L433xx
+    if (HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1) != HAL_OK) {
+        Error_Handler();
+    }
+    #endif
 
 
     /* Activate PLL with MSI , stabilizied via PLL by LSE */
@@ -80,7 +88,11 @@ void stm32_peripherals_clocks_init(void) {
     /* AHB prescaler divider at 1 as second step */
     RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK;
     RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+    #ifdef STM32L4R5xx
     HAL_CHECK(HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_5));
+    #elif STM32L433xx
+    HAL_CHECK(HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_4));
+    #endif
 
     /* Select MSI output as USB clock source */
     PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_USB | RCC_PERIPHCLK_RTC | RCC_PERIPHCLK_ADC;

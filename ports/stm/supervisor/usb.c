@@ -29,7 +29,7 @@ static void init_usb_vbus_sense(void) {
     // B-peripheral session valid override enable
     USB_OTG_FS->GOTGCTL |= USB_OTG_GOTGCTL_BVALOEN;
     USB_OTG_FS->GOTGCTL |= USB_OTG_GOTGCTL_BVALOVAL;
-    #else
+    #elif !defined(STM32L433XX)
     USB_OTG_FS->GCCFG |= USB_OTG_GCCFG_NOVBUSSENS;
     USB_OTG_FS->GCCFG &= ~USB_OTG_GCCFG_VBUSBSEN;
     USB_OTG_FS->GCCFG &= ~USB_OTG_GCCFG_VBUSASEN;
@@ -69,7 +69,7 @@ void init_usb_hardware(void) {
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     #if CPY_STM32H7
     GPIO_InitStruct.Alternate = GPIO_AF10_OTG1_FS;
-    #elif CPY_STM32F4 || CPY_STM32F7 || CPY_STM32L4
+    #elif CPY_STM32F4 || CPY_STM32F7 || defined(STM32L4R5XX)
     GPIO_InitStruct.Alternate = GPIO_AF10_OTG_FS;
     #endif
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
@@ -117,7 +117,7 @@ void init_usb_hardware(void) {
     #if CPY_STM32H7
     HAL_PWREx_EnableUSBVoltageDetector();
     __HAL_RCC_USB2_OTG_FS_CLK_ENABLE();
-    #else
+    #elif CPY_STM32F4 || CPY_STM32F7 || defined(STM32L4R5XX)
     /* Peripheral clock enable */
     __HAL_RCC_USB_OTG_FS_CLK_ENABLE();
     #endif
