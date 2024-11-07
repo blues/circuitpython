@@ -197,7 +197,11 @@ ifneq ($(CIRCUITPY_AUDIOBUSIO_PDMIN),0)
 endif
 
 ifneq ($(CIRCUITPY_USB),0)
-SRC_C += lib/tinyusb/src/portable/synopsys/dwc2/dcd_dwc2.c
+	ifeq ($(MCU_VARIANT_LOWER),stm32l433xx)
+		SRC_C += lib/tinyusb/src/portable/st/stm32_fsdev/dcd_stm32_fsdev.c
+	else
+		SRC_C += lib/tinyusb/src/portable/synopsys/dwc2/dcd_dwc2.c
+	endif
 endif
 
 SRC_S = \
