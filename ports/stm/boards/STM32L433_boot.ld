@@ -3,23 +3,12 @@
 */
 
 /* Specify the memory areas */
-/*
 MEMORY
 {
-    FLASH (rx)          : ORIGIN = 0x08000000, LENGTH = 256k
-    FLASH_ISR (rx)      : ORIGIN = 0x08010000, LENGTH = 4K
-    FLASH_FIRMWARE (rx) : ORIGIN = 0x08011000, LENGTH = 156K-64K-4K
-    FLASH_FS (rw)       : ORIGIN = 0x08027000, LENGTH = 88K
-    RAM (xrw)           : ORIGIN = 0x20000000, LENGTH = 64K
-}
-*/
-
-MEMORY
-{
-    FLASH (rx)          : ORIGIN = 0x08000000, LENGTH = 2048K /* entire flash */
+    FLASH (rx)          : ORIGIN = 0x08000000, LENGTH = 256k /* entire flash */
     FLASH_ISR (rx)      : ORIGIN = 0x08010000, LENGTH = 4K /* ISR vector. Kind of wasteful. */
-    FLASH_FIRMWARE (rx) : ORIGIN = 0x08011000, LENGTH = 1024K-128K-64K-4K  /* For now, limit to 1MB so that bank switching is still possible. */
-    FLASH_FS (rw)       : ORIGIN = 0x08100000, LENGTH = 1024K
+    FLASH_FIRMWARE (rx) : ORIGIN = 0x08011000, LENGTH = 192K-64K-4K  /* For now, limit to 1MB so that bank switching is still possible. */
+    FLASH_FS (rw)       : ORIGIN = 0x08030000, LENGTH = 60K
     RAM (xrw)           : ORIGIN = 0x20000000, LENGTH = 640K
 }
 
