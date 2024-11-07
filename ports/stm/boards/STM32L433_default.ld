@@ -7,8 +7,8 @@ MEMORY
 {
     FLASH (rx)          : ORIGIN = 0x08000000, LENGTH = 256K /* entire flash */
     FLASH_ISR (rx)      : ORIGIN = 0x08000000, LENGTH = 4K /* ISR vector. Kind of wasteful. */
-    FLASH_FIRMWARE (rx) : ORIGIN = 0x08001000, LENGTH = 128K - 4K
-    FLASH_FS (rw)       : ORIGIN = 0x08020000, LENGTH = 128K
+    FLASH_FIRMWARE (rx) : ORIGIN = 0x08001000, LENGTH = 192K - 4K
+    FLASH_FS (rw)       : ORIGIN = 0x08030000, LENGTH = 64K
     RAM (xrw)           : ORIGIN = 0x20000000, LENGTH = 64K
 }
 
