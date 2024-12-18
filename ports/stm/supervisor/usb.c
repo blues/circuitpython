@@ -56,7 +56,7 @@ void init_usb_hardware(void) {
 
     GPIO_InitTypeDef GPIO_InitStruct = {0};
     /**USB_OTG_FS GPIO Configuration
-    PA10     ------> USB_OTG_FS_ID
+    PA10     ------> USB_OTG_FS_ID (not present on STM32L433)
     PA11     ------> USB_OTG_FS_DM
     PA12     ------> USB_OTG_FS_DP
     */
@@ -71,6 +71,8 @@ void init_usb_hardware(void) {
     GPIO_InitStruct.Alternate = GPIO_AF10_OTG1_FS;
     #elif CPY_STM32F4 || CPY_STM32F7 || defined(STM32L4R5XX)
     GPIO_InitStruct.Alternate = GPIO_AF10_OTG_FS;
+    #elif defined(STM32L433XX)
+    GPIO_InitStruct.Alternate = GPIO_AF10_USB_FS;
     #endif
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
     never_reset_pin_number(0, 11);

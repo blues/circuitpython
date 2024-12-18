@@ -20,32 +20,36 @@ digitalio_digitalinout_obj_t power_pin = { .base.type = &digitalio_digitalinout_
 digitalio_digitalinout_obj_t discharge_pin = { .base.type = &digitalio_digitalinout_type };
 
 void initialize_discharge_pin(void) {
-
     /* Initialize the 3V3 discharge to be OFF and the output power to be ON */
-    __HAL_RCC_GPIOE_CLK_ENABLE();
-    __HAL_RCC_GPIOC_CLK_ENABLE();
+    __HAL_RCC_GPIOA_CLK_ENABLE();
+    __HAL_RCC_GPIOH_CLK_ENABLE();
+    __HAL_RCC_GPIOB_CLK_ENABLE();
 
-
-    common_hal_digitalio_digitalinout_construct(&power_pin, &pin_PE04);
-    common_hal_digitalio_digitalinout_construct(&discharge_pin, &pin_PE06);
+    common_hal_digitalio_digitalinout_construct(&power_pin, &pin_PH00);
+    common_hal_digitalio_digitalinout_construct(&discharge_pin, &pin_PH01);
     common_hal_digitalio_digitalinout_never_reset(&power_pin);
     common_hal_digitalio_digitalinout_never_reset(&discharge_pin);
 
     GPIO_InitTypeDef GPIO_InitStruct;
-    /* Set the DISCHARGE pin and the USB_DETECT pin to FLOAT */
+
+    /* Set DISCHARGE_3V3 as well as the pins we're not initially using to FLOAT */
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Pin = GPIO_PIN_6;
-    HAL_GPIO_Init(GPIOE, &GPIO_InitStruct); /* PE6 DISCHRG */
-    HAL_GPIO_Init(GPIOC, &GPIO_InitStruct); /* PC6 is USB_DETECT */
+    GPIO_InitStruct.Pin = GPIO_PIN_1;
+    HAL_GPIO_Init(GPIOH, &GPIO_InitStruct); /* PH1 DISCHARGE_3V3 */
+    GPIO_InitStruct.Pin = GPIO_PIN_3;
+    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct); /* PB3 is USB_DETECT */
+    GPIO_InitStruct.Pin = GPIO_PIN_15;
+    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct); /* PA15 is CHARGE_DETECT */
+    GPIO_InitStruct.Pin = GPIO_PIN_4;
+    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct); /* PA4 is BAT_VOLTAGE */
 
     /* Turn on the 3V3 regulator */
     GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
     GPIO_InitStruct.Speed = GPIO_SPEED_LOW;
-    GPIO_InitStruct.Pin = GPIO_PIN_4;
-    HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
-    HAL_GPIO_WritePin(GPIOE, GPIO_PIN_4, GPIO_PIN_SET);
-
+    GPIO_InitStruct.Pin = GPIO_PIN_0;
+    HAL_GPIO_Init(GPIOH, &GPIO_InitStruct);
+    HAL_GPIO_WritePin(GPIOH, GPIO_InitStruct.Pin, GPIO_PIN_SET);
 }
 
 void board_init(void) {
@@ -56,16 +60,16 @@ void board_init(void) {
     //  Without this, USB does not function.
     HAL_InitTick((1UL << __NVIC_PRIO_BITS) - 1UL);
 
-    __HAL_RCC_GPIOE_CLK_ENABLE();
+    __HAL_RCC_GPIOA_CLK_ENABLE();
     GPIO_InitTypeDef GPIO_InitStruct;
     GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_LOW;
-    GPIO_InitStruct.Pin = GPIO_PIN_2;
-    HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
-    HAL_GPIO_WritePin(GPIOE, GPIO_PIN_2, GPIO_PIN_SET);
+    GPIO_InitStruct.Pin = GPIO_PIN_8;
+    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
     HAL_Delay(50);
-    HAL_GPIO_WritePin(GPIOE, GPIO_PIN_2, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
 }
 
 void reset_board(void) {

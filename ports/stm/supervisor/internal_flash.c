@@ -77,9 +77,9 @@ static uint8_t _flash_cache[0x1000] __attribute__((aligned(4)));
 
 #elif defined(STM32L433XX)
 static const flash_layout_t flash_layout[] = {
-    { 0x08000000, 0x2000, 128 },
+    { 0x08000000, 0x0800, 128 },
 };
-static uint8_t _flash_cache[0x2000] __attribute__((aligned(4)));
+static uint8_t _flash_cache[0x0800] __attribute__((aligned(4)));
 
 #else
     #error Unsupported processor
@@ -181,11 +181,11 @@ void port_internal_flash_flush(void) {
     // set up for erase
     FLASH_EraseInitTypeDef EraseInitStruct = {};
     #if CPY_STM32L4
-    #if defined(STM32L4R5)
+    #if defined(STM32L4R5XX)
     EraseInitStruct.TypeErase = TYPEERASE_PAGES;
     EraseInitStruct.Banks = FLASH_BANK_2;           // filesystem stored in upper 1MB of flash in dual bank mode
-    #elif defined(STM32L433)
-    EraseInitStruct.TypeErase = FLASH_TYPEERASE_MASSERASE;
+    #elif defined(STM32L433XX)
+    EraseInitStruct.TypeErase = TYPEERASE_PAGES;
     EraseInitStruct.Banks = FLASH_BANK_1;
     #endif
     #else
