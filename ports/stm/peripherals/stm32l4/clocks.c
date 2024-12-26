@@ -56,18 +56,25 @@ void stm32_peripherals_clocks_init(void) {
     }
     #endif
 
-
     /* Activate PLL with MSI , stabilizied via PLL by LSE */
     RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_LSE | RCC_OSCILLATORTYPE_MSI;
     RCC_OscInitStruct.MSIState = RCC_MSI_ON;
     RCC_OscInitStruct.LSEState = RCC_LSE_ON;
-    RCC_OscInitStruct.MSIClockRange = RCC_MSIRANGE_11;
     RCC_OscInitStruct.MSICalibrationValue = RCC_MSICALIBRATION_DEFAULT;
     RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
     RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_MSI;
+    #ifdef STM32L4R5xx
+    RCC_OscInitStruct.MSIClockRange = RCC_MSIRANGE_11;
     RCC_OscInitStruct.PLL.PLLM = 6;
     RCC_OscInitStruct.PLL.PLLN = 30;
     RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV5;
+    #elif STM32L433xx
+    RCC_OscInitStruct.MSIClockRange = RCC_MSIRANGE_6;
+    RCC_OscInitStruct.HSI48State = RCC_HSI48_ON;
+    RCC_OscInitStruct.PLL.PLLM = 1;
+    RCC_OscInitStruct.PLL.PLLN = 40;
+    RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV7;
+    #endif
     RCC_OscInitStruct.PLL.PLLQ = RCC_PLLQ_DIV2;
     RCC_OscInitStruct.PLL.PLLR = RCC_PLLR_DIV2;
     HAL_CHECK(HAL_RCC_OscConfig(&RCC_OscInitStruct));
@@ -83,22 +90,29 @@ void stm32_peripherals_clocks_init(void) {
     RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
     RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
     RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
-    HAL_CHECK(HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_3));
-
-    /* AHB prescaler divider at 1 as second step */
-    RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK;
-    RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
     #ifdef STM32L4R5xx
-    HAL_CHECK(HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_5));
+    HAL_CHECK(HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_3));
     #elif STM32L433xx
     HAL_CHECK(HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_4));
     #endif
 
+    #ifdef STM32L4R5xx
+    /* AHB prescaler divider at 1 as second step */
+    RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK;
+    RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+    HAL_CHECK(HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_5));
+    #endif
+
     /* Select MSI output as USB clock source */
+    #ifdef STM32L4R5xx
     PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_USB | RCC_PERIPHCLK_RTC | RCC_PERIPHCLK_ADC;
     PeriphClkInitStruct.UsbClockSelection = RCC_USBCLKSOURCE_MSI;
+    #elif STM32L433xx
+    PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_USB;
+    PeriphClkInitStruct.UsbClockSelection = RCC_USBCLKSOURCE_HSI48;
+    #endif
     PeriphClkInitStruct.RTCClockSelection = RCC_RTCCLKSOURCE_LSE;
     PeriphClkInitStruct.AdcClockSelection = RCC_ADCCLKSOURCE_SYSCLK;
-    HAL_CHECK(HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct));
 
+    HAL_CHECK(HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct));
 }

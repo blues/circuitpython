@@ -27,7 +27,7 @@ static const mp_rom_map_elem_t mcu_pin_globals_table[] = {
     { MP_ROM_QSTR(MP_QSTR_PB01), MP_ROM_PTR(&pin_PB01) },
     { MP_ROM_QSTR(MP_QSTR_PB02), MP_ROM_PTR(&pin_PB02) },
     { MP_ROM_QSTR(MP_QSTR_PB10), MP_ROM_PTR(&pin_PB10) },
-    // VCAP1 ------------------------------------------*/
+    { MP_ROM_QSTR(MP_QSTR_PB11), MP_ROM_PTR(&pin_PB11) },
     // VSS --------------------------------------------*/
     // VDD --------------------------------------------*/
 

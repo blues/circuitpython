@@ -122,8 +122,9 @@ void init_usb_hardware(void) {
     #elif CPY_STM32F4 || CPY_STM32F7 || defined(STM32L4R5XX)
     /* Peripheral clock enable */
     __HAL_RCC_USB_OTG_FS_CLK_ENABLE();
+    #else
+    __HAL_RCC_USB_CLK_ENABLE();
     #endif
-
 
     init_usb_vbus_sense();
 }

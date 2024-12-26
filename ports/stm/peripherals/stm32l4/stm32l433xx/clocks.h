@@ -14,16 +14,16 @@
 
 // Defaults:
 #ifndef CPY_CLK_VSCALE
-#define CPY_CLK_VSCALE (PWR_REGULATOR_VOLTAGE_SCALE1_BOOST)      // up to 80MHz
+#define CPY_CLK_VSCALE (PWR_REGULATOR_VOLTAGE_SCALE1)      // up to 80MHz
 #endif
 #ifndef CPY_CLK_PLLM
-#define CPY_CLK_PLLM (12)
+#define CPY_CLK_PLLM (1)
 #endif
 #ifndef CPY_CLK_PLLN
-#define CPY_CLK_PLLN (60)
+#define CPY_CLK_PLLN (40)
 #endif
 #ifndef CPY_CLK_PLLP
-#define CPY_CLK_PLLP (RCC_PLLP_DIV2)
+#define CPY_CLK_PLLP (RCC_PLLP_DIV7)
 #endif
 #ifndef CPY_CLK_PLLQ
 #define CPY_CLK_PLLQ (2)
