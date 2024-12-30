@@ -81,11 +81,11 @@ const mcu_tim_pin_obj_t mcu_tim_pin_list[TIM_PIN_ARRAY_LEN] = {
 // CAN
 CAN_TypeDef *mcu_can_banks[] = {CAN1};
 
-const mcu_periph_obj_t mcu_can_tx_list[4] = {
+const mcu_periph_obj_t mcu_can_tx_list[2] = {
     PERIPH(1, 10, &pin_PA12),
     PERIPH(1, 10, &pin_PB09),
 };
-const mcu_periph_obj_t mcu_can_rx_list[4] = {
+const mcu_periph_obj_t mcu_can_rx_list[2] = {
     PERIPH(1, 10, &pin_PA11),
     PERIPH(1, 10, &pin_PB08),
 };

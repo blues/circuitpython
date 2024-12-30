@@ -8,8 +8,8 @@ static const mp_rom_map_elem_t mcu_pin_globals_table[] = {
     { MP_ROM_QSTR(MP_QSTR_PC13), MP_ROM_PTR(&pin_PC13) },
     // PC14 OSC32_IN ----------------------------------*/
     // PC15 OSC32_OUT ---------------------------------*/
-    // PH0 OSC_IN -------------------------------------*/
-    // PH1 OSC_OUT ------------------------------------*/
+    //{ MP_ROM_QSTR(MP_QSTR_PH00), MP_ROM_PTR(&pin_PH00) }, PH00 OSC_IN
+    //{ MP_ROM_QSTR(MP_QSTR_PH01), MP_ROM_PTR(&pin_PH01) }, PH01 OSC_OUT
     // NRST -------------------------------------------*/
     // VSSA -------------------------------------------*/
     // VDDA -------------------------------------------*/
