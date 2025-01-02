@@ -84,14 +84,14 @@ void stm32_peripherals_clocks_init(void) {
     RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV7;
     RCC_OscInitStruct.PLL.PLLQ = RCC_PLLQ_DIV2;
     RCC_OscInitStruct.PLL.PLLR = RCC_PLLR_DIV2;
-
-    __HAL_RCC_HSI48_ENABLE();
     #endif
 
     HAL_CHECK(HAL_RCC_OscConfig(&RCC_OscInitStruct));
 
+    #ifdef STM32L4R5xx
     /* Enable MSI Auto-calibration through LSE */
     HAL_RCCEx_EnableMSIPLLMode();
+    #endif
 
     /* Select PLL as system clock source and configure the HCLK, PCLK1 and PCLK2
     clocks dividers */
