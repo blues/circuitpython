@@ -56,9 +56,8 @@ void board_init(void) {
     // enable the debugger while sleeping. Todo move somewhere more central (kind of generally useful in a debug build)
     SET_BIT(DBGMCU->CR, DBGMCU_CR_DBG_SLEEP);
 
-    //  Set tick interrupt priority, default HAL value is intentionally invalid
-    //  Without this, USB does not function.
-    HAL_InitTick((1UL << __NVIC_PRIO_BITS) - 1UL);
+    //  Set tick interrupt priority lower than USB to ensure proper operation
+    HAL_InitTick(2);
 
     __HAL_RCC_GPIOA_CLK_ENABLE();
     GPIO_InitTypeDef GPIO_InitStruct;

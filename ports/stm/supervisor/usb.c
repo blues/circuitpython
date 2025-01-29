@@ -46,6 +46,11 @@ static void init_usb_vbus_sense(void) {
 }
 
 void init_usb_hardware(void) {
+    #ifdef STM32L433xx
+    /* Set USB interrupt priority */
+    HAL_NVIC_SetPriority(USB_IRQn, 1, 0);
+    HAL_NVIC_EnableIRQ(USB_IRQn);
+    #endif
 
     /* Enable USB power on Pwrctrl CR2 register */
     #ifdef PWR_CR2_USV
