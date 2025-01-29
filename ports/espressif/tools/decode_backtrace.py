@@ -3,8 +3,7 @@ and line numbers.
 
 Run with: python3 tools/decode_backtrace.py <board>
 
-Enter the backtrace line at the "? " prompt. CTRL-C to exit the script.
-"""
+Enter the backtrace line at the "? " prompt. CTRL-C to exit the script."""
 
 import subprocess
 import sys
