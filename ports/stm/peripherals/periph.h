@@ -21,11 +21,11 @@ typedef struct {
 } mcu_periph_obj_t;
 
 #define PERIPH(index, alt, p_pin)       \
-        { \
-            .periph_index = index, \
-            .altfn_index = alt, \
-            .pin = p_pin, \
-        }
+    { \
+        .periph_index = index, \
+        .altfn_index = alt, \
+        .pin = p_pin, \
+    }
 
 // Timer Peripheral
 

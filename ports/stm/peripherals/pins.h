@@ -32,12 +32,12 @@ typedef struct {
 // but all 3 ADCs will share the same input number per pin.
 // F4 family has 3 ADC max, 24 channels max.
 #define ADC_INPUT(mask, number) \
-        .adc_unit = mask, \
-        .adc_channel = number,
+    .adc_unit = mask, \
+    .adc_channel = number,
 
 #define NO_ADC \
-        .adc_unit = 0x00, \
-        .adc_channel = 0x1f
+    .adc_unit = 0x00, \
+    .adc_channel = 0x1f
 
 extern const mp_obj_type_t mcu_pin_type;
 
