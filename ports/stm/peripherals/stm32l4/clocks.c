@@ -88,23 +88,6 @@ void stm32_peripherals_clocks_init(void) {
 
     HAL_CHECK(HAL_RCC_OscConfig(&RCC_OscInitStruct));
 
-    #ifdef STM32L433xx
-    /* Enable CRS clock */
-    __HAL_RCC_CRS_CLK_ENABLE();
-
-    /* Configure CRS */
-    RCC_CRSInitTypeDef RCC_CRSInitStruct = {0};
-    RCC_CRSInitStruct.Prescaler = RCC_CRS_SYNC_DIV1;
-    RCC_CRSInitStruct.Source = RCC_CRS_SYNC_SOURCE_USB;
-    RCC_CRSInitStruct.Polarity = RCC_CRS_SYNC_POLARITY_RISING;
-    RCC_CRSInitStruct.ReloadValue = __HAL_RCC_CRS_RELOADVALUE_CALCULATE(48000000, 1000);
-    RCC_CRSInitStruct.ErrorLimitValue = 34;
-    RCC_CRSInitStruct.HSI48CalibrationValue = 32;
-
-    /* Start automatic synchronization */
-    HAL_RCCEx_CRSConfig(&RCC_CRSInitStruct);
-    #endif
-
     #ifdef STM32L4R5xx
     /* Enable MSI Auto-calibration through LSE */
     HAL_RCCEx_EnableMSIPLLMode();
