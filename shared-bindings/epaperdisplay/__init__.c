@@ -18,7 +18,7 @@
 
 static const mp_rom_map_elem_t epaperdisplay_module_globals_table[] = {
     { MP_ROM_QSTR(MP_QSTR___name__), MP_ROM_QSTR(MP_QSTR_displayio) },
-    { MP_ROM_QSTR(MP_QSTR_EPaperDisplay), MP_ROM_PTR(&epaperdisplay_epaperdisplay_type) },
+    { MP_ROM_QSTR(MP_QSTR_EPaperDisplay), MP_ROM_PTR(&epaperdisplay_epaperdisplay_type) }
 };
 
 static MP_DEFINE_CONST_DICT(epaperdisplay_module_globals, epaperdisplay_module_globals_table);
