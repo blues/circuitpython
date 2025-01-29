@@ -23,7 +23,7 @@
 
 static const mp_rom_map_elem_t onewireio_module_globals_table[] = {
     { MP_ROM_QSTR(MP_QSTR___name__), MP_ROM_QSTR(MP_QSTR_onewireio) },
-    { MP_ROM_QSTR(MP_QSTR_OneWire), MP_ROM_PTR(&onewireio_onewire_type) },
+    { MP_ROM_QSTR(MP_QSTR_OneWire), MP_ROM_PTR(&onewireio_onewire_type) }
 };
 
 static MP_DEFINE_CONST_DICT(onewireio_module_globals, onewireio_module_globals_table);
