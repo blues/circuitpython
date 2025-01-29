@@ -16,6 +16,10 @@
 #include "shared-bindings/digitalio/DriveMode.h"
 #include "board.h"
 
+// Forward declarations for USB suspend/resume hooks
+void board_usb_suspend_hook(void);
+void board_usb_resume_hook(void);
+
 digitalio_digitalinout_obj_t power_pin = { .base.type = &digitalio_digitalinout_type };
 digitalio_digitalinout_obj_t discharge_pin = { .base.type = &digitalio_digitalinout_type };
 
@@ -73,6 +77,34 @@ void board_init(void) {
 
 void reset_board(void) {
     initialize_discharge_pin();
+}
+
+void board_usb_suspend_hook(void) {
+    // Disable unused peripherals to reduce power consumption
+    __HAL_RCC_GPIOA_CLK_DISABLE();
+    __HAL_RCC_GPIOB_CLK_DISABLE();
+    __HAL_RCC_GPIOH_CLK_DISABLE();
+
+    // Enter Stop 1 mode with regulator in low-power mode
+    HAL_PWREx_EnterSTOP1Mode(PWR_STOPENTRY_WFI);
+}
+
+void board_usb_resume_hook(void) {
+    // Re-enable GPIO clocks
+    __HAL_RCC_GPIOA_CLK_ENABLE();
+    __HAL_RCC_GPIOB_CLK_ENABLE();
+    __HAL_RCC_GPIOH_CLK_ENABLE();
+
+    // Reconfigure system clock after waking from STOP mode
+    SystemClock_Config();
+
+    // Re-initialize GPIO pins
+    GPIO_InitTypeDef GPIO_InitStruct;
+    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_LOW;
+    GPIO_InitStruct.Pin = GPIO_PIN_8;
+    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 }
 
 // Use the MP_WEAK supervisor/shared/board.c versions of routines not defined here.

@@ -10,3 +10,7 @@
 
 extern digitalio_digitalinout_obj_t power_pin;
 extern digitalio_digitalinout_obj_t discharge_pin;
+
+// USB power management hooks
+void board_usb_suspend_hook(void);
+void board_usb_resume_hook(void);
