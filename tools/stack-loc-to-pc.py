@@ -4,7 +4,6 @@ infrequently used stack space.
 Pipe in disassembly like so:
 
 arm-none-eabi-objdump --disassemble=mp_execute_bytecode build-metro_m0_express/firmware.elf | python ../../tools/stack-loc-to-pc.py
-
 """
 
 import sys
@@ -16,11 +15,12 @@ offsets = {}
 for line in sys.stdin:
     if "sp" in line:
         m = offset.search(line)
-        o = int(m.groups()[0])
-        pc = line.split(":")[0]
-        if o not in offsets:
-            offsets[o] = []
-        offsets[o].append(pc.strip())
+        if m:
+            o = int(m.groups()[0])
+            pc = line.split(":")[0].strip()
+            if o not in offsets:
+                offsets[o] = []
+            offsets[o].append(pc)
 
 print("Offset", "Size", "PCs", sep="\t")
 last_o = 0
