@@ -111,24 +111,36 @@ class Query:
         self.headers = headers
 
     def paginate(self, page_info, name):
-        has_page = page_info["hasNextPage" if name.startswith("after") else "hasPreviousPage"]
-        if has_page:
-            self.variables[name] = page_info[
-                "endCursor" if name.startswith("after") else "startCursor"
-            ]
+        if not isinstance(page_info, dict):
+            return False
+            
+        page_type = "hasNextPage" if name.startswith("after") else "hasPreviousPage"
+        cursor_type = "endCursor" if name.startswith("after") else "startCursor"
+        
+        has_page = page_info.get(page_type, False)
+        if has_page and cursor_type in page_info:
+            self.variables[name] = page_info[cursor_type]
+            
         return has_page
 
     def fetch(self):
-        request = requests.post(
-            "https://api.github.com/graphql",
-            json={"query": self.query, "variables": self.variables},
-            headers=self.headers,
-        )
-        if request.status_code == 200:
+        try:
+            request = requests.post(
+                "https://api.github.com/graphql",
+                json={"query": self.query, "variables": self.variables},
+                headers=self.headers,
+                timeout=30
+            )
+            request.raise_for_status()
             return request.json()
-        else:
-            print(request.json())
-            raise Exception("Query Failed: {}".format(request.status_code))
+        except requests.RequestException as e:
+            print(f"Request failed: {str(e)}")
+            if hasattr(e.response, 'json'):
+                try:
+                    print(e.response.json())
+                except ValueError:
+                    pass
+            raise Exception(f"Query failed: {str(e)}")
 
 
 def set_output(name, value):
@@ -146,22 +158,24 @@ def get_commit_depth_and_check_suite(query_commits):
         if commits["totalCount"] > 0:
             nodes = commits["nodes"]
             nodes.reverse()
-            if nodes[0]["commit"]["oid"] == os.environ["EXCLUDE_COMMIT"]:
+            if nodes[0]["commit"]["oid"] == os.environ.get("EXCLUDE_COMMIT"):
                 nodes.pop(0)
             for commit in nodes:
                 commit_depth += 1
                 commit = commit["commit"]
                 commit_sha = commit["oid"]
-                check_suites = commit["checkSuites"]
-                if check_suites["totalCount"] > 0:
-                    for check_suite in check_suites["nodes"]:
-                        workflow_run = check_suite.get("workflowRun")
-                        if workflow_run and workflow_run.get("workflow", {}).get("name") == "Build CI":
+                check_suites = commit.get("checkSuites", {})
+                if check_suites.get("totalCount", 0) > 0:
+                    for check_suite in check_suites.get("nodes", []):
+                        workflow_run = check_suite.get("workflowRun", {})
+                        workflow = workflow_run.get("workflow", {})
+                        workflow_name = workflow.get("name") if workflow else None
+                        if workflow_name == "Build CI":
                             return [
                                 {"sha": commit_sha, "depth": commit_depth},
                                 (
                                     check_suite["id"]
-                                    if check_suite["conclusion"] != "SUCCESS"
+                                    if check_suite.get("conclusion") != "SUCCESS"
                                     else None
                                 ),
                             ]
@@ -177,28 +191,32 @@ def get_bad_check_runs(query_check_runs):
     have_dependent_jobs = ["scheduler", "mpy-cross", "tests"]
 
     while more_pages:
-        check_runs = query_check_runs.fetch()["data"]["node"]
+        response = query_check_runs.fetch()
+        check_runs = response.get("data", {}).get("node", {})
         more_pages = False
 
         for run_type in run_types:
             run_type_camel = run_type.capitalize() + "Run"
             run_type = run_type + "Runs"
 
-            for check_run in check_runs[run_type]["nodes"]:
-                name = check_run["name"]
+            run_data = check_runs.get(run_type, {})
+            for check_run in run_data.get("nodes", []):
+                name = check_run.get("name", "")
 
                 if any([name.startswith(job) for job in have_dependent_jobs]):
                     return {}
 
                 if name.startswith("ports"):
-                    matrix_job = name.rsplit(" (", 1)[1][:-1]
-                    bad_runs.setdefault("ports", []).append(matrix_job)
+                    try:
+                        matrix_job = name.rsplit(" (", 1)[1][:-1]
+                        bad_runs.setdefault("ports", []).append(matrix_job)
+                    except IndexError:
+                        continue
                 else:
                     bad_runs[name] = True
 
-            if query_check_runs.paginate(
-                check_runs[run_type]["pageInfo"], "after" + run_type_camel
-            ):
+            page_info = run_data.get("pageInfo", {})
+            if query_check_runs.paginate(page_info, "after" + run_type_camel):
                 query_check_runs.variables["include" + run_type_camel] = True
                 more_pages = True
 
@@ -211,31 +229,44 @@ def set_commit(commit):
 
 
 def main():
-    query_commits = Query(QUERY_COMMITS, query_variables_commits, headers)
-    query_commits.variables["owner"], query_commits.variables["name"] = os.environ["REPO"].split(
-        "/"
-    )
+    try:
+        if "REPO" not in os.environ:
+            print("Error: REPO environment variable not set")
+            return
 
-    commit, check_suite = get_commit_depth_and_check_suite(query_commits)
+        query_commits = Query(QUERY_COMMITS, query_variables_commits, headers)
+        try:
+            owner, name = os.environ["REPO"].split("/")
+        except ValueError:
+            print("Error: REPO must be in format 'owner/name'")
+            return
+            
+        query_commits.variables["owner"] = owner
+        query_commits.variables["name"] = name
 
-    if not check_suite:
-        if commit:
-            set_commit(commit)
-        else:
-            print("Abort: No check suite found")
-        quit()
+        commit, check_suite = get_commit_depth_and_check_suite(query_commits)
 
-    query_check_runs = Query(QUERY_CHECK_RUNS, query_variables_check_runs, headers)
-    query_check_runs.variables["checkSuiteID"] = check_suite
+        if not check_suite:
+            if commit:
+                set_commit(commit)
+            else:
+                print("Abort: No check suite found")
+            return
 
-    check_runs = get_bad_check_runs(query_check_runs)
+        query_check_runs = Query(QUERY_CHECK_RUNS, query_variables_check_runs, headers)
+        query_check_runs.variables["checkSuiteID"] = check_suite
 
-    if not check_runs:
-        print("Abort: No check runs found")
-        quit()
+        check_runs = get_bad_check_runs(query_check_runs)
 
-    set_commit(commit)
-    set_output("check_runs", json.dumps(check_runs))
+        if not check_runs:
+            print("Abort: No check runs found")
+            return
+
+        set_commit(commit)
+        set_output("check_runs", json.dumps(check_runs))
+    except Exception as e:
+        print(f"Error: {str(e)}")
+        return
 
 
 if __name__ == "__main__":
