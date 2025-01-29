@@ -17,7 +17,7 @@
 static void enter_low_power_mode(void) {
     // Enable low-power mode in USB peripheral
     USB->CNTR |= USB_CNTR_LPMODE;
-    
+
     // Enter STOP mode with regulator in low-power mode
     __HAL_PWR_CLEAR_FLAG(PWR_FLAG_WU);
     HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFI);
@@ -26,7 +26,7 @@ static void enter_low_power_mode(void) {
 static void exit_low_power_mode(void) {
     // Disable low-power mode in USB peripheral
     USB->CNTR &= ~USB_CNTR_LPMODE;
-    
+
     // System will automatically exit STOP mode on interrupt
     // Reconfigure the system clock if needed
     SystemClock_Config();
@@ -78,7 +78,7 @@ void init_usb_hardware(void) {
     /* Set USB interrupt priority */
     HAL_NVIC_SetPriority(USB_IRQn, 1, 0);
     HAL_NVIC_EnableIRQ(USB_IRQn);
-    
+
     /* Enable wakeup interrupt for USB resume */
     HAL_NVIC_EnableIRQ(USB_WKUP_IRQn);
     HAL_NVIC_SetPriority(USB_WKUP_IRQn, 1, 0);
@@ -174,7 +174,7 @@ void OTG_FS_IRQHandler(void) {
 void USB_WKUP_IRQHandler(void) {
     // Clear wakeup flag
     __HAL_PWR_CLEAR_FLAG(PWR_FLAG_WU);
-    
+
     // Handle USB wakeup
     board_usb_resume_hook();
 }
