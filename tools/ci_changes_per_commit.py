@@ -114,12 +114,25 @@ class Query:
         if not isinstance(page_info, dict):
             return False
             
+        if not isinstance(name, str):
+            print(f"Warning: Invalid name parameter type: {type(name)}")
+            return False
+            
+        if not (name.startswith("after") or name.startswith("before")):
+            print(f"Warning: Invalid pagination direction: {name}")
+            return False
+            
         page_type = "hasNextPage" if name.startswith("after") else "hasPreviousPage"
         cursor_type = "endCursor" if name.startswith("after") else "startCursor"
         
         has_page = page_info.get(page_type, False)
         if has_page and cursor_type in page_info:
-            self.variables[name] = page_info[cursor_type]
+            cursor = page_info.get(cursor_type)
+            if cursor is not None:
+                self.variables[name] = cursor
+            else:
+                print(f"Warning: Missing {cursor_type} in page_info")
+                return False
             
         return has_page
 
