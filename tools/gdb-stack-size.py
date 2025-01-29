@@ -3,7 +3,6 @@
 
 
 
-
 class StackSize(gdb.Command):
     def __init__(self):
         super(StackSize, self).__init__("stack-size", gdb.COMMAND_USER)
