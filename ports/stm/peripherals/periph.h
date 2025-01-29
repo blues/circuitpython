@@ -37,12 +37,12 @@ typedef struct {
 } mcu_tim_pin_obj_t;
 
 #define TIM(index, alt, channel, tim_pin)       \
-        { \
-            .tim_index = index - 1, \
-            .altfn_index = alt, \
-            .channel_index = channel - 1, \
-            .pin = tim_pin, \
-        }
+    { \
+        .tim_index = index - 1, \
+        .altfn_index = alt, \
+        .channel_index = channel - 1, \
+        .pin = tim_pin, \
+    }
 
 // F4 Series
 // Access Lines

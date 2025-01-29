@@ -44,12 +44,12 @@ extern const mp_obj_type_t mcu_pin_type;
 // STM32 can have up to 9 ports, each restricted to 16 pins
 // We split the pin/port evenly, in contrast to nrf.
 #define PIN(p_port, p_number, p_adc)       \
-        { \
-            { &mcu_pin_type }, \
-            .port = p_port, \
-            .number = p_number, \
-            p_adc \
-        }
+    { \
+        { &mcu_pin_type }, \
+        .port = p_port, \
+        .number = p_number, \
+        p_adc \
+    }
 
 // Use illegal pin value to mark unassigned pins.
 #define NO_PIN 0xff
