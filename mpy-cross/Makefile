@@ -50,17 +50,17 @@ LDFLAGS += $(LDFLAGS_MOD) $(LDFLAGS_ARCH) -lm $(LDFLAGS_EXTRA)
 # source files
 # CIRCUITPY-CHANGE: extra files
 SRC_C = \
-	main.c \
-	gccollect.c \
-	shared/runtime/gchelper_generic.c \
-	supervisor/stub/safe_mode.c \
-	supervisor/stub/stack.c \
-	supervisor/shared/translate/translate.c
+    main.c \
+    gccollect.c \
+    shared/runtime/gchelper_generic.c \
+    supervisor/stub/safe_mode.c \
+    supervisor/stub/stack.c \
+    supervisor/shared/translate/translate.c
 
 # Add fmode when compiling with mingw gcc
 COMPILER_TARGET := $(shell $(CC) -dumpmachine)
 ifneq (,$(findstring mingw,$(COMPILER_TARGET)))
-	SRC_C += windows-fmode.c
+    SRC_C += windows-fmode.c
 endif
 
 OBJ = $(PY_CORE_O)
