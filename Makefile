@@ -129,108 +129,108 @@ qthelp:
           ".qhcp project file in $(BUILDDIR)/qthelp, like this:"
     @echo "# qcollectiongenerator $(BUILDDIR)/qthelp/MicroPython.qhcp"
     @echo "To view the help file:"
-	@echo "# assistant -collectionFile $(BUILDDIR)/qthelp/MicroPython.qhc"
+    @echo "# assistant -collectionFile $(BUILDDIR)/qthelp/MicroPython.qhc"
 
 devhelp:
-	$(SPHINXBUILD) -b devhelp $(ALLSPHINXOPTS) $(BUILDDIR)/devhelp
-	@echo
-	@echo "Build finished."
-	@echo "To view the help file:"
-	@echo "# mkdir -p $$HOME/.local/share/devhelp/MicroPython"
-	@echo "# ln -s $(BUILDDIR)/devhelp $$HOME/.local/share/devhelp/MicroPython"
-	@echo "# devhelp"
+    $(SPHINXBUILD) -b devhelp $(ALLSPHINXOPTS) $(BUILDDIR)/devhelp
+    @echo
+    @echo "Build finished."
+    @echo "To view the help file:"
+    @echo "# mkdir -p $$HOME/.local/share/devhelp/MicroPython"
+    @echo "# ln -s $(BUILDDIR)/devhelp $$HOME/.local/share/devhelp/MicroPython"
+    @echo "# devhelp"
 
 epub:
-	$(SPHINXBUILD) -b epub $(ALLSPHINXOPTS) $(BUILDDIR)/epub
-	@echo
-	@echo "Build finished. The epub file is in $(BUILDDIR)/epub."
+    $(SPHINXBUILD) -b epub $(ALLSPHINXOPTS) $(BUILDDIR)/epub
+    @echo
+    @echo "Build finished. The epub file is in $(BUILDDIR)/epub."
 
 latex:
-	$(SPHINXBUILD) -b latex $(ALLSPHINXOPTS) $(BUILDDIR)/latex
-	@echo
-	@echo "Build finished; the LaTeX files are in $(BUILDDIR)/latex."
-	@echo "Run \`make' in that directory to run these through (pdf)latex" \
-	      "(use \`make latexpdf' here to do that automatically)."
+    $(SPHINXBUILD) -b latex $(ALLSPHINXOPTS) $(BUILDDIR)/latex
+    @echo
+    @echo "Build finished; the LaTeX files are in $(BUILDDIR)/latex."
+    @echo "Run \`make' in that directory to run these through (pdf)latex" \
+          "(use \`make latexpdf' here to do that automatically)."
 
 # seems to be malfunctioning
 latexpdf:
-	$(SPHINXBUILD) -b latex $(ALLSPHINXOPTS) $(BUILDDIR)/latex
-	@echo "Running LaTeX files through pdflatex..."
-	$(MAKE) -C $(BUILDDIR)/latex all-pdf
-	@echo "pdflatex finished; the PDF files are in $(BUILDDIR)/latex."
+    $(SPHINXBUILD) -b latex $(ALLSPHINXOPTS) $(BUILDDIR)/latex
+    @echo "Running LaTeX files through pdflatex..."
+    $(MAKE) -C $(BUILDDIR)/latex all-pdf
+    @echo "pdflatex finished; the PDF files are in $(BUILDDIR)/latex."
 
 # seems to be malfunctioning
 latexpdfja:
-	$(SPHINXBUILD) -b latex $(ALLSPHINXOPTS) $(BUILDDIR)/latex
-	@echo "Running LaTeX files through platex and dvipdfmx..."
-	$(MAKE) -C $(BUILDDIR)/latex all-pdf-ja
-	@echo "pdflatex finished; the PDF files are in $(BUILDDIR)/latex."
+    $(SPHINXBUILD) -b latex $(ALLSPHINXOPTS) $(BUILDDIR)/latex
+    @echo "Running LaTeX files through platex and dvipdfmx..."
+    $(MAKE) -C $(BUILDDIR)/latex all-pdf-ja
+    @echo "pdflatex finished; the PDF files are in $(BUILDDIR)/latex."
 
 # seems to be malfunctioning
 text:
-	$(SPHINXBUILD) -b text $(ALLSPHINXOPTS) $(BUILDDIR)/text
-	@echo
-	@echo "Build finished. The text files are in $(BUILDDIR)/text."
+    $(SPHINXBUILD) -b text $(ALLSPHINXOPTS) $(BUILDDIR)/text
+    @echo
+    @echo "Build finished. The text files are in $(BUILDDIR)/text."
 
 # seems to be malfunctioning
 man:
-	$(SPHINXBUILD) -b man $(ALLSPHINXOPTS) $(BUILDDIR)/man
-	@echo
-	@echo "Build finished. The manual pages are in $(BUILDDIR)/man."
+    $(SPHINXBUILD) -b man $(ALLSPHINXOPTS) $(BUILDDIR)/man
+    @echo
+    @echo "Build finished. The manual pages are in $(BUILDDIR)/man."
 
 texinfo:
-	$(SPHINXBUILD) -b texinfo $(ALLSPHINXOPTS) $(BUILDDIR)/texinfo
-	@echo
-	@echo "Build finished. The Texinfo files are in $(BUILDDIR)/texinfo."
-	@echo "Run \`make' in that directory to run these through makeinfo" \
-	      "(use \`make info' here to do that automatically)."
+    $(SPHINXBUILD) -b texinfo $(ALLSPHINXOPTS) $(BUILDDIR)/texinfo
+    @echo
+    @echo "Build finished. The Texinfo files are in $(BUILDDIR)/texinfo."
+    @echo "Run \`make' in that directory to run these through makeinfo" \
+          "(use \`make info' here to do that automatically)."
 
 info:
-	$(SPHINXBUILD) -b texinfo $(ALLSPHINXOPTS) $(BUILDDIR)/texinfo
-	@echo "Running Texinfo files through makeinfo..."
-	make -C $(BUILDDIR)/texinfo info
-	@echo "makeinfo finished; the Info files are in $(BUILDDIR)/texinfo."
+    $(SPHINXBUILD) -b texinfo $(ALLSPHINXOPTS) $(BUILDDIR)/texinfo
+    @echo "Running Texinfo files through makeinfo..."
+    make -C $(BUILDDIR)/texinfo info
+    @echo "makeinfo finished; the Info files are in $(BUILDDIR)/texinfo."
 
 gettext:
-	$(SPHINXBUILD) -b gettext $(I18NSPHINXOPTS) $(BUILDDIR)/locale
-	@echo
-	@echo "Build finished. The message catalogs are in $(BUILDDIR)/locale."
+    $(SPHINXBUILD) -b gettext $(I18NSPHINXOPTS) $(BUILDDIR)/locale
+    @echo
+    @echo "Build finished. The message catalogs are in $(BUILDDIR)/locale."
 
 changes:
-	$(SPHINXBUILD) -b changes $(ALLSPHINXOPTS) $(BUILDDIR)/changes
-	@echo
-	@echo "The overview file is in $(BUILDDIR)/changes."
+    $(SPHINXBUILD) -b changes $(ALLSPHINXOPTS) $(BUILDDIR)/changes
+    @echo
+    @echo "The overview file is in $(BUILDDIR)/changes."
 
 linkcheck:
-	$(SPHINXBUILD) -b linkcheck $(ALLSPHINXOPTS) $(BUILDDIR)/linkcheck
-	@echo
-	@echo "Link check complete; look for any errors in the above output " \
-	      "or in $(BUILDDIR)/linkcheck/output.txt."
+    $(SPHINXBUILD) -b linkcheck $(ALLSPHINXOPTS) $(BUILDDIR)/linkcheck
+    @echo
+    @echo "Link check complete; look for any errors in the above output " \
+          "or in $(BUILDDIR)/linkcheck/output.txt."
 
 doctest:
-	$(SPHINXBUILD) -b doctest $(ALLSPHINXOPTS) $(BUILDDIR)/doctest
-	@echo "Testing of doctests in the sources finished, look at the " \
-	      "results in $(BUILDDIR)/doctest/output.txt."
+    $(SPHINXBUILD) -b doctest $(ALLSPHINXOPTS) $(BUILDDIR)/doctest
+    @echo "Testing of doctests in the sources finished, look at the " \
+          "results in $(BUILDDIR)/doctest/output.txt."
 
 xml:
-	$(SPHINXBUILD) -b xml $(ALLSPHINXOPTS) $(BUILDDIR)/xml
-	@echo
-	@echo "Build finished. The XML files are in $(BUILDDIR)/xml."
+    $(SPHINXBUILD) -b xml $(ALLSPHINXOPTS) $(BUILDDIR)/xml
+    @echo
+    @echo "Build finished. The XML files are in $(BUILDDIR)/xml."
 
 pseudoxml:
-	$(SPHINXBUILD) -b pseudoxml $(ALLSPHINXOPTS) $(BUILDDIR)/pseudoxml
-	@echo
-	@echo "Build finished. The pseudo-XML files are in $(BUILDDIR)/pseudoxml."
+    $(SPHINXBUILD) -b pseudoxml $(ALLSPHINXOPTS) $(BUILDDIR)/pseudoxml
+    @echo
+    @echo "Build finished. The pseudo-XML files are in $(BUILDDIR)/pseudoxml."
 
 # phony target so we always run
 .PHONY: all-source
 all-source:
 
-TRANSLATE_CHECK_SUBMODULES=if ! [ -f extmod/ulab/README.md ]; then python tools/ci_fetch_deps.py translate; fi
-TRANSLATE_COMMAND=find $(TRANSLATE_SOURCES) -type d \( $(TRANSLATE_SOURCES_EXC) \) -prune -o -type f \( -iname "*.c" -o -iname "*.h" \) -print | (LC_ALL=C sort) | xgettext -x locale/synthetic.pot -f- -L C -s --add-location=file --keyword=MP_ERROR_TEXT -o - | sed -e '/"POT-Creation-Date: /d'
+TRANSLATE_CHECK_SUBMODULES = if ! [ -f extmod/ulab/README.md ]; then python tools/ci_fetch_deps.py translate; fi
+TRANSLATE_COMMAND = find $(TRANSLATE_SOURCES) -type d \( $(TRANSLATE_SOURCES_EXC) \) -prune -o -type f \( -iname "*.c" -o -iname "*.h" \) -print | (LC_ALL=C sort) | xgettext -x locale/synthetic.pot -f- -L C -s --add-location=file --keyword=MP_ERROR_TEXT -o - | sed -e '/"POT-Creation-Date: /d'
 locale/circuitpython.pot: all-source
-	$(TRANSLATE_CHECK_SUBMODULES)
-	$(TRANSLATE_COMMAND) > $@
+    $(TRANSLATE_CHECK_SUBMODULES)
+    $(TRANSLATE_COMMAND) > $@
 
 # Historically, `make translate` updated the .pot file and ran msgmerge.
 # However, this was a frequent source of merge conflicts.  Weblate can perform
@@ -245,47 +245,47 @@ translate: locale/circuitpython.pot
 # needed we preserve a rule to do it.
 .PHONY: msgmerge
 msgmerge:
-	for po in $(shell ls locale/*.po); do msgmerge -U $$po -s --no-fuzzy-matching --add-location=file locale/circuitpython.pot; done
+    for po in $(shell ls locale/*.po); do msgmerge -U $$po -s --no-fuzzy-matching --add-location=file locale/circuitpython.pot; done
 
 merge-translate:
-	git merge HEAD 1>&2 2> /dev/null; test $$? -eq 128
-	rm locale/*~ || true
-	git checkout --theirs -- locale/*
-	make translate
+    git merge HEAD 1>&2 2> /dev/null; test $$? -eq 128
+    rm locale/*~ || true
+    git checkout --theirs -- locale/*
+    make translate
 
 .PHONY: check-translate
 check-translate:
-	$(TRANSLATE_CHECK_SUBMODULES)
-	$(TRANSLATE_COMMAND) > locale/circuitpython.pot.tmp
-	$(PYTHON) tools/check_translations.py locale/circuitpython.pot.tmp locale/circuitpython.pot; status=$$?; rm -f locale/circuitpython.pot.tmp; exit $$status
+    $(TRANSLATE_CHECK_SUBMODULES)
+    $(TRANSLATE_COMMAND) > locale/circuitpython.pot.tmp
+    $(PYTHON) tools/check_translations.py locale/circuitpython.pot.tmp locale/circuitpython.pot; status=$$?; rm -f locale/circuitpython.pot.tmp; exit $$status
 
 .PHONY: stubs
 stubs:
-	@rm -rf circuitpython-stubs
-	@mkdir circuitpython-stubs
-	@$(PYTHON) tools/extract_pyi.py shared-bindings/ $(STUBDIR)
-	@$(PYTHON) tools/extract_pyi.py extmod/ulab/code/ $(STUBDIR)/ulab
-	@$(PYTHON) tools/extract_pyi.py ports/atmel-samd/bindings $(STUBDIR)
-	@$(PYTHON) tools/extract_pyi.py ports/espressif/bindings $(STUBDIR)
-	@$(PYTHON) tools/extract_pyi.py ports/raspberrypi/bindings $(STUBDIR)
-	@cp setup.py-stubs circuitpython-stubs/setup.py
-	@cp README.rst-stubs circuitpython-stubs/README.rst
-	@cp MANIFEST.in-stubs circuitpython-stubs/MANIFEST.in
-	@$(PYTHON) tools/board_stubs/build_board_specific_stubs/board_stub_builder.py
-	@cp -r tools/board_stubs/circuitpython_setboard circuitpython-stubs/circuitpython_setboard
-	@$(PYTHON) -m build circuitpython-stubs
-	@touch circuitpython-stubs/board/__init__.py
-	@touch circuitpython-stubs/board_definitions/__init__.py
+    @rm -rf circuitpython-stubs
+    @mkdir circuitpython-stubs
+    @$(PYTHON) tools/extract_pyi.py shared-bindings/ $(STUBDIR)
+    @$(PYTHON) tools/extract_pyi.py extmod/ulab/code/ $(STUBDIR)/ulab
+    @$(PYTHON) tools/extract_pyi.py ports/atmel-samd/bindings $(STUBDIR)
+    @$(PYTHON) tools/extract_pyi.py ports/espressif/bindings $(STUBDIR)
+    @$(PYTHON) tools/extract_pyi.py ports/raspberrypi/bindings $(STUBDIR)
+    @cp setup.py-stubs circuitpython-stubs/setup.py
+    @cp README.rst-stubs circuitpython-stubs/README.rst
+    @cp MANIFEST.in-stubs circuitpython-stubs/MANIFEST.in
+    @$(PYTHON) tools/board_stubs/build_board_specific_stubs/board_stub_builder.py
+    @cp -r tools/board_stubs/circuitpython_setboard circuitpython-stubs/circuitpython_setboard
+    @$(PYTHON) -m build circuitpython-stubs
+    @touch circuitpython-stubs/board/__init__.py
+    @touch circuitpython-stubs/board_definitions/__init__.py
 
 .PHONY: check-stubs
 check-stubs: stubs
-	@(cd $(STUBDIR) && set -- */__init__.pyi && mypy "$${@%/*}")
-	@tools/test-stubs.sh
+    @(cd $(STUBDIR) && set -- */__init__.pyi && mypy "$${@%/*}")
+    @tools/test-stubs.sh
 
 .PHONY: update-frozen-libraries
 update-frozen-libraries:
-	@echo "Updating all frozen libraries to latest tagged version."
-	cd frozen; for library in *; do cd $$library; ../../tools/git-checkout-latest-tag.sh; cd ..; done
+    @echo "Updating all frozen libraries to latest tagged version."
+    cd frozen; for library in *; do cd $$library; ../../tools/git-checkout-latest-tag.sh; cd ..; done
 
 one-of-each: samd21 litex mimxrt10xx nordic stm
 

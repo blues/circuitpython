@@ -2,7 +2,6 @@
 `stack-size` to print a backtrace with each frame size next to it."""
 
 
-
 class StackSize(gdb.Command):
     def __init__(self):
         super(StackSize, self).__init__("stack-size", gdb.COMMAND_USER)

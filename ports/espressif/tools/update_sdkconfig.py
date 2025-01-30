@@ -1,8 +1,6 @@
 """This script updates the sdkconfigs based on the menuconfig results in a given
 build."""
 
-
-
 import pathlib
 import click
 import copy

@@ -1,7 +1,6 @@
 """Source this file into gdb `source ../../tools/cortex-m-fault-gdb.py` then run
 `cortex-m-fault` to print basic info about the fault registers."""
 
-
 SCS = 0xE000E000
 SCB = SCS + 0x0D00
 CPUID = SCB + 0x000  # (R/ )  CPUID Base Register */
