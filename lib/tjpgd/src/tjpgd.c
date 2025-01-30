@@ -116,9 +116,9 @@ static const uint8_t Clip8[1024] = {
 
 static uint8_t BYTECLIP (int val)
 {
-	if (val < 0) return 0;
-	if (val > 255) return 255;
-	return (uint8_t)val;
+    if (val < 0) return 0;
+    if (val > 255) return 255;
+    return (uint8_t)val;
 }
 
 #endif
@@ -129,23 +129,22 @@ static uint8_t BYTECLIP (int val)
 /* Allocate a memory block from memory pool                              */
 /*-----------------------------------------------------------------------*/
 
-static void* alloc_pool (	/* Pointer to allocated memory block (NULL:no memory available) */
-	JDEC* jd,				/* Pointer to the decompressor object */
-	size_t ndata			/* Number of bytes to allocate */
+static void* alloc_pool (    /* Pointer to allocated memory block (NULL:no memory available) */
+    JDEC* jd,              /* Pointer to the decompressor object */
+    size_t ndata          /* Number of bytes to allocate */
 )
 {
-	char *rp = 0;
+    char *rp = 0;
 
+    ndata = (ndata + 3) & ~3;           /* Align block size to the word boundary */
 
-	ndata = (ndata + 3) & ~3;			/* Align block size to the word boundary */
+    if (jd->sz_pool >= ndata) {
+        jd->sz_pool -= ndata;
+        rp = (char*)jd->pool;           /* Get start of available memory pool */
+        jd->pool = (void*)(rp + ndata); /* Allocate requierd bytes */
+    }
 
-	if (jd->sz_pool >= ndata) {
-		jd->sz_pool -= ndata;
-		rp = (char*)jd->pool;			/* Get start of available memory pool */
-		jd->pool = (void*)(rp + ndata);	/* Allocate requierd bytes */
-	}
-
-	return (void*)rp;	/* Return allocated memory block (NULL:no memory to allocate) */
+    return (void*)rp;    /* Return allocated memory block (NULL:no memory to allocate) */
 }
 
 
@@ -155,15 +154,15 @@ static void* alloc_pool (	/* Pointer to allocated memory block (NULL:no memory a
 /* Create de-quantization and prescaling tables with a DQT segment       */
 /*-----------------------------------------------------------------------*/
 
-static JRESULT create_qt_tbl (	/* 0:OK, !0:Failed */
-	JDEC* jd,				/* Pointer to the decompressor object */
-	const uint8_t* data,	/* Pointer to the quantizer tables */
-	size_t ndata			/* Size of input data */
+static JRESULT create_qt_tbl (    /* 0:OK, !0:Failed */
+    JDEC* jd,              /* Pointer to the decompressor object */
+    const uint8_t* data,   /* Pointer to the quantizer tables */
+    size_t ndata          /* Size of input data */
 )
 {
-	unsigned int i, zi;
-	uint8_t d;
-	int32_t *pb;
+    unsigned int i, zi;
+    uint8_t d;
+    int32_t *pb;
 
 
 	while (ndata) {	/* Process all tables in the segment */

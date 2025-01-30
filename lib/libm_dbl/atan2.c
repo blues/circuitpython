@@ -45,18 +45,18 @@ pi_lo  = 1.2246467991473531772E-16; /* 0x3CA1A626, 0x33145C07 */
 
 double atan2(double y, double x)
 {
-	double z;
-	uint32_t m,lx,ly,ix,iy;
+    double z;
+    uint32_t m,lx,ly,ix,iy;
 
-	if (isnan(x) || isnan(y))
-		return x+y;
-	EXTRACT_WORDS(ix, lx, x);
-	EXTRACT_WORDS(iy, ly, y);
-	if (((ix-0x3ff00000) | lx) == 0)  /* x = 1.0 */
-		return atan(y);
-	m = ((iy>>31)&1) | ((ix>>30)&2);  /* 2*sign(x)+sign(y) */
-	ix = ix & 0x7fffffff;
-	iy = iy & 0x7fffffff;
+    if (isnan(x) || isnan(y))
+        return x+y;
+    EXTRACT_WORDS(ix, lx, x);
+    EXTRACT_WORDS(iy, ly, y);
+    if (((ix-0x3ff00000) | lx) == 0)  /* x = 1.0 */
+        return atan(y);
+    m = ((iy>>31)&1) | ((ix>>30)&2);  /* 2*sign(x)+sign(y) */
+    ix = ix & 0x7fffffff;
+    iy = iy & 0x7fffffff;
 
 	/* when y = 0 */
 	if ((iy|ly) == 0) {
