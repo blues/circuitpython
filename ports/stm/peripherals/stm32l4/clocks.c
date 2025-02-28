@@ -9,9 +9,9 @@
 #include <stdbool.h>
 
 // L4 Series
-#ifdef STM32L4R5xx
+#if defined(STM32L4R5xx)
 #include "stm32l4/stm32l4r5xx/clocks.h"
-#elif STM32L433xx
+#elif defined(STM32L433xx)
 #include "stm32l4/stm32l433xx/clocks.h"
 #else
 #error Please add other MCUs here so that they are not silently ignored due to #define typos
@@ -46,18 +46,18 @@ void stm32_peripherals_clocks_init(void) {
 
     /** Configure the main internal regulator output voltage
   */
-    #if STM32L4R5xx
+    #if defined(STM32L4R5xx)
     if (HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1_BOOST) != HAL_OK) {
         Error_Handler();
     }
-    #elif STM32L433xx
+    #elif defined(STM32L433xx)
     if (HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1) != HAL_OK) {
         Error_Handler();
     }
     #endif
 
     /* Activate PLL with MSI , stabilizied via PLL by LSE */
-    #ifdef STM32L4R5xx
+    #if defined(STM32L4R5xx)
     RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_LSE | RCC_OSCILLATORTYPE_MSI;
     RCC_OscInitStruct.MSIState = RCC_MSI_ON;
     RCC_OscInitStruct.LSEState = RCC_LSE_ON;
@@ -70,7 +70,7 @@ void stm32_peripherals_clocks_init(void) {
     RCC_OscInitStruct.PLL.PLLN = 30;
     RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV5;
     RCC_OscInitStruct.PLL.PLLQ = RCC_PLLQ_DIV2;
-    #elif STM32L433xx
+    #elif defined(STM32L433xx)
     RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_LSE | RCC_OSCILLATORTYPE_HSI48 | RCC_OSCILLATORTYPE_MSI;
     RCC_OscInitStruct.HSI48State = RCC_HSI48_ON;
     RCC_OscInitStruct.MSIState = RCC_MSI_ON;
@@ -84,6 +84,8 @@ void stm32_peripherals_clocks_init(void) {
     RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV7;
     RCC_OscInitStruct.PLL.PLLQ = RCC_PLLQ_DIV2;
     RCC_OscInitStruct.PLL.PLLR = RCC_PLLR_DIV2;
+    #else
+    #error Unknown MCU
     #endif
 
     HAL_CHECK(HAL_RCC_OscConfig(&RCC_OscInitStruct));
@@ -100,10 +102,12 @@ void stm32_peripherals_clocks_init(void) {
     RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
     RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
     RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
-    #ifdef STM32L4R5xx
+    #if defined(STM32L4R5xx)
     HAL_CHECK(HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_3));
-    #elif STM32L433xx
+    #elif defined(STM32L433xx)
     HAL_CHECK(HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_4));
+    #else
+      #error Please expand the conditional compilation to set the default flash latency
     #endif
 
     /* AHB prescaler divider at 1 as second step */
@@ -115,9 +119,9 @@ void stm32_peripherals_clocks_init(void) {
 
     /* Select MSI output as USB clock source */
     PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_USB | RCC_PERIPHCLK_RTC | RCC_PERIPHCLK_ADC;
-    #ifdef STM32L4R5xx
+    #if defined(STM32L4R5xx)
     PeriphClkInitStruct.UsbClockSelection = RCC_USBCLKSOURCE_MSI;
-    #elif STM32L433xx
+    #elif defined(STM32L433xx)
     PeriphClkInitStruct.UsbClockSelection = RCC_USBCLKSOURCE_HSI48;
     #endif
     PeriphClkInitStruct.RTCClockSelection = RCC_RTCCLKSOURCE_LSE;
