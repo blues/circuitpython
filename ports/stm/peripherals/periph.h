@@ -137,3 +137,7 @@ typedef struct {
 #define HAS_BASIC_TIM 0
 #include "stm32h7/stm32h743xx/periph.h"
 #endif
+
+#if !defined(HAS_DAC)
+#error Unknown MCU
+#endif

@@ -7,7 +7,7 @@ MEMORY
 {
     FLASH (rx)          : ORIGIN = 0x08000000, LENGTH = 256k /* entire flash */
     FLASH_ISR (rx)      : ORIGIN = 0x08010000, LENGTH = 4K /* ISR vector. Kind of wasteful. */
-    FLASH_FIRMWARE (rx) : ORIGIN = 0x08011000, LENGTH = 192K-64K-4K  /* For now, limit to 1MB so that bank switching is still possible. */
+    FLASH_FIRMWARE (rx) : ORIGIN = 0x08011000, LENGTH = 192K-64K-4K
     FLASH_FS (rw)       : ORIGIN = 0x08030000, LENGTH = 60K
     RAM (xrw)           : ORIGIN = 0x20000000, LENGTH = 640K
 }
