@@ -64,9 +64,15 @@ static uint8_t _flash_cache[0x8000] __attribute__((aligned(4)));
     #endif
 #elif defined(STM32H7)
 
+#if defined(STM32H750xx)
+static const flash_layout_t flash_layout[] = {
+    { 0x08000000, 0x20000, 1 },
+};
+#else
 static const flash_layout_t flash_layout[] = {
     { 0x08000000, 0x20000, 16 },
 };
+#endif
 static uint8_t _flash_cache[0x20000] __attribute__((aligned(4)));
 
 #elif defined(STM32L4R5xx)
@@ -86,7 +92,6 @@ static uint8_t _flash_cache[0x0800] __attribute__((aligned(4)));
 #endif
 
 #define NO_CACHE        0xffffffff
-#define MAX_CACHE       0x4000
 
 
 static uint32_t _cache_flash_addr = NO_CACHE;
@@ -94,6 +99,10 @@ static uint32_t _cache_flash_addr = NO_CACHE;
 #if defined(STM32H7)
 // get the bank of a given flash address
 static uint32_t get_bank(uint32_t addr) {
+    #if defined(STM32H750xx) // H750 only has 1 bank
+    return FLASH_BANK_1;
+    #else
+
     if (READ_BIT(FLASH->OPTCR, FLASH_OPTCR_SWAP_BANK) == 0) {
         // no bank swap
         if (addr < (FLASH_BASE + FLASH_BANK_SIZE)) {
@@ -109,6 +118,7 @@ static uint32_t get_bank(uint32_t addr) {
             return FLASH_BANK_1;
         }
     }
+    #endif
 }
 #endif
 
@@ -197,6 +207,9 @@ void port_internal_flash_flush(void) {
     uint32_t sector_start_addr = 0xffffffff;
     #if defined(STM32H7)
     EraseInitStruct.Banks = get_bank(_cache_flash_addr);
+    #if defined(STM32H750xx)
+    EraseInitStruct.NbSectors = 1;
+    #endif
     #endif
     #if CPY_STM32L4
     EraseInitStruct.Page = flash_get_sector_info(_cache_flash_addr, &sector_start_addr, &sector_size);
