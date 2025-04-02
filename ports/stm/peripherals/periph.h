@@ -84,6 +84,13 @@ typedef struct {
 #include "stm32l4/stm32l4r5xx/periph.h"
 #endif
 
+#ifdef STM32L433xx
+#define HAS_DAC 1
+#define HAS_TRNG 1
+#define HAS_BASIC_TIM 1
+#include "stm32l4/stm32l433xx/periph.h"
+#endif
+
 #ifdef STM32F405xx
 #define HAS_DAC 1
 #define HAS_TRNG 1
@@ -136,4 +143,8 @@ typedef struct {
 #define HAS_TRNG 1
 #define HAS_BASIC_TIM 1
 #include "stm32h7/stm32h750xx/periph.h"
+#endif
+
+#if !defined(HAS_DAC)
+#error Unknown MCU
 #endif

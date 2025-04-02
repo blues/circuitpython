@@ -165,7 +165,7 @@ endif
 
 # Need this to avoid UART linker problems. TODO: rewrite to use registered callbacks.
 # Does not exist for F4 and lower
-ifeq ($(MCU_VARIANT),$(filter $(MCU_VARIANT),STM32F765xx STM32F767xx STM32F769xx STM32H743xx STM32H750xx STM32L4R5xx))
+ifeq ($(MCU_VARIANT),$(filter $(MCU_VARIANT),STM32F765xx STM32F767xx STM32F769xx STM32H743xx STM32H750xx STM32L4R5xx STM32L433xx))
 	SRC_STM32 += $(HAL_DIR)/Src/stm32$(MCU_SERIES_LOWER)xx_hal_uart_ex.c
 endif
 
@@ -197,9 +197,12 @@ ifneq ($(CIRCUITPY_AUDIOBUSIO_PDMIN),0)
 endif
 
 ifneq ($(CIRCUITPY_USB),0)
-SRC_C += \
-	lib/tinyusb/src/portable/synopsys/dwc2/dcd_dwc2.c \
-	lib/tinyusb/src/portable/synopsys/dwc2/dwc2_common.c
+	ifeq ($(MCU_VARIANT),$(filter $(MCU_VARIANT),STM32L433xx))
+		SRC_C += lib/tinyusb/src/portable/st/stm32_fsdev/dcd_stm32_fsdev.c
+	else
+		SRC_C += lib/tinyusb/src/portable/synopsys/dwc2/dcd_dwc2.c
+		SRC_C += lib/tinyusb/src/portable/synopsys/dwc2/dwc2_common.c
+	endif
 endif
 
 SRC_S = \
